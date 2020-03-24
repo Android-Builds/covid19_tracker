@@ -23,7 +23,7 @@ class SplashScreen extends StatefulWidget {
   }
 
   getlatest() {
-    latest.confirmed = latest.deaths =  latest.recovered = 0;
+    latest.cases = latest.deaths =  latest.recovered = 0;
     getLatest().then((_latest) {
       setState(() {
         latest = _latest;

@@ -27,27 +27,29 @@ class _HomePageState extends State<HomePage> {
       darkTheme: ThemeData.dark().copyWith(
         backgroundColor: Colors.black
       ),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-            centerTitle: true,
-            elevation: 0.0,
-            backgroundColor: Colors.transparent,
-            bottom: TabBar(
-              tabs: <Widget>[
-                Text('1'),
-                Text('2'),
-              ]
+      home: SafeArea(
+        child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(widget.title),
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              bottom: TabBar(
+                tabs: <Widget>[
+                  Text('1'),
+                  Text('2'),
+                ]
+              ),
             ),
+            body: TabBarView(
+              children: <Widget>[
+                GlobalPage(latest: widget.latest, info: widget.info),
+                AllCountries(info: widget.info)
+              ],
+            )
           ),
-          body: TabBarView(
-            children: <Widget>[
-              GlobalPage(latest: widget.latest, info: widget.info),
-              AllCountries(info: widget.info)
-            ],
-          )
         ),
       ),
     );

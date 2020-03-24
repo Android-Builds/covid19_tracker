@@ -1,4 +1,5 @@
 import 'package:covid19_tracker/models/info.dart';
+import 'package:covid19_tracker/pages/countrystats.dart';
 import 'package:flutter/material.dart';
 
 class AllCountries extends StatefulWidget {
@@ -17,36 +18,41 @@ class _AllCountriesState extends State<AllCountries> {
         return Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 1.0),
-            child: Container(
-              height: 100.0,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.black45,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          widget.info[index].country,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0
+            child: GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) => 
+              // LineChart())),
+              CountryStats(country: widget.info[index].country))),
+              child: Container(
+                height: 100.0,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.black45,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            widget.info[index].country,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0
+                            ),
                           ),
-                        ),
-                        Text(widget.info[index].province),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(widget.info[index].confirmed),
-                  SizedBox(height:10.0),
-                  Text(widget.info[index].deaths),
-                  SizedBox(height:10.0),
-                  Text(widget.info[index].recovered)
-                ],
+                    Text(widget.info[index].cases),
+                    SizedBox(height:10.0),
+                    Text(widget.info[index].deaths),
+                    SizedBox(height:10.0),
+                    Text(widget.info[index].recovered)
+                  ],
+                ),
               ),
             ),
           )
