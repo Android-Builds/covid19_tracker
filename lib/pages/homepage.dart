@@ -121,6 +121,7 @@ class DataSearch extends SearchDelegate {
       IconButton(
         icon: Icon(Icons.clear), 
         onPressed: () {
+          query = '';
         }
       )
     ];
@@ -150,16 +151,18 @@ class DataSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
+    //Implement buildResults
     throw UnimplementedError();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //search suggestions
-    return Container(
-      color: Theme.of(context).backgroundColor,
-    );
+    final suggestionlist = query.isEmpty ? list 
+    : list.where((element) => element.country.startsWith(query.substring(0,1)
+    .toUpperCase() + query.substring(1,query.length))).toList();
+
+    return AllCountries(info: suggestionlist);
   }
   
 }

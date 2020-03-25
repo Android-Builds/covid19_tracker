@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:covid19_tracker/models/stats.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class _CountryStatsState extends State<CountryStats> {
     getStats(widget.country).then((_stats) {
       /*var result = dates.map((e) => e.length == 7 ? DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}') : 
       DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}')).toList();*/
+      setState(() {
       List<String> dates =  _stats.cases.keys.toList().cast<String>();
       List<int> cases = _stats.cases.values.toList().cast<int>();
       for(int i=0;i<dates.length; i++){
@@ -54,7 +57,8 @@ class _CountryStatsState extends State<CountryStats> {
           int.parse(dates[i].substring(0,1)), 
           int.parse(dates[i].substring(2,3))))
         );
-      }      
+      }
+      });     
     });
     super.initState();
   }
@@ -92,8 +96,7 @@ class _CountryStatsState extends State<CountryStats> {
     return series;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget myWidget() {
     return Scaffold(
       appBar: AppBar(
         title: Text('Line Chart Example'),
@@ -130,6 +133,21 @@ class _CountryStatsState extends State<CountryStats> {
           ),
         ),
       )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Future.delayed(Duration(seconds: 2)),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) 
+          return myWidget();
+        else 
+        return Center(
+          child: CircularProgressIndicator(),
+        ); // Return empty container to avoid build errors
+      }
     );
   }
 }
