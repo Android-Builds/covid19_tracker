@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String api = 'https://corona.lmao.ninja/historical/';
+String api = 'https://corona.lmao.ninja/v2/historical/';
 
 class Stats {
-  var cases;
-  var deaths;
-  var recovered;
+  Map cases;
+  Map deaths;
+  Map recovered;
 
   Stats({this.cases, this.deaths, this.recovered});
 
   factory Stats.fromJson(Map<String, dynamic> json) {
     return Stats(
-      cases: json['timeline']['cases'].toString(),
-      deaths: json['timeline']['deaths'].toString(),
-      recovered: json['timeline']['recovered'].toString()
+      cases: json['timeline']['cases'],
+      deaths: json['timeline']['deaths'],
+      recovered: json['timeline']['recovered']
     );
   }
 }
