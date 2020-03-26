@@ -1,4 +1,4 @@
- import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
@@ -39,7 +39,8 @@ class SplashScreen extends StatefulWidget {
     // setcountrieslist();
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
-        builder: (context) => HomePage(title: 'Covid-19 Tracker', latest: latest, info: info));
+        builder: (context) => HomePage(title: 'Covid-19 Tracker', 
+        latest: latest, info: info));
       Navigator.pushReplacement(context, route);
     });
   }
@@ -60,21 +61,14 @@ class SplashScreen extends StatefulWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'News',
+                    'Covid-19 Tracker',
                     style: TextStyle(
                       color:getColor(context),
                       fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
                       fontFamily: 'ShadowsIntoLight',
                       letterSpacing: 3.0
                     ),
                   ),
-                  SizedBox(height: 50.0),
-                  // SvgPicture.asset(
-                  //   'assets/news.svg',
-                  //   height: 100.0,
-                  //   width: 100.0,
-                  // )
                 ],
               ),
             ],

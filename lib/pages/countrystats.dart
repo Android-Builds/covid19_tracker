@@ -99,7 +99,7 @@ class _CountryStatsState extends State<CountryStats> {
   Widget myWidget() {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Line Chart Example'),
+        title: Text(widget.country),
         centerTitle: true,
       ),
       body: Center(
@@ -124,7 +124,7 @@ class _CountryStatsState extends State<CountryStats> {
                     child: new charts.TimeSeriesChart(
                       _getSeriesData(), 
                       animate: true, 
-                      dateTimeFactory: const charts.LocalDateTimeFactory()
+                      dateTimeFactory: const charts.LocalDateTimeFactory(),
                     ),
                   ),
                 ],

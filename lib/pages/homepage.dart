@@ -1,4 +1,5 @@
 import 'package:covid19_tracker/models/info.dart';
+import 'package:covid19_tracker/pages/splashscreen.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
 import 'package:covid19_tracker/pages/tabs/global.dart';
 import 'package:flutter/material.dart';
@@ -22,35 +23,18 @@ class _HomePageState extends State<HomePage> {
     items = duplicateItems = widget.info;
   }
 
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
+
   List<Info> duplicateItems;
   List<Info> items;
 
-  void filterSearchResults(String query) {
-    List<Info> dummySearchList = List<Info>();
-    dummySearchList.addAll(duplicateItems);
-    if(query.isNotEmpty) {
-      List<Info> dummyListData = List<Info>();
-      // dummySearchList.forEach((item) {
-      //   if(item.country.contains(query)) {
-      //     dummyListData.add(item);
-      //   }
-      // });
-      for(int i=0; i<dummySearchList.length; i++) {
-        if(dummySearchList[i].country == query) {
-          dummyListData.add(widget.info[i]);
-        }
-      }
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
-    }
+  Future<Null> _refresh() {
+    // return fetchPost().then((_posts) {
+    //   setState(() {
+    //     localposts = _posts;
+    //   });
+    // });
   }
 
 
@@ -69,7 +53,12 @@ class _HomePageState extends State<HomePage> {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(widget.title),
+              title: Text(
+                widget.title,
+                style: TextStyle(
+                  color: getColor(context),
+                ),
+              ),
               centerTitle: true,
               elevation: 0.0,
               backgroundColor: Colors.transparent,
@@ -77,16 +66,27 @@ class _HomePageState extends State<HomePage> {
                 tabs: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Global'),
+                    child: Text(
+                      'Global',
+                      style: TextStyle(
+                        color: getColor(context)
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Countries'),
+                    child: Text(
+                      'Countries',
+                      style: TextStyle(
+                        color: getColor(context)
+                      ),                      
+                    ),
                   ),
                 ]
               ),
               actions: <Widget>[
                 IconButton(
+                  color: getColor(context),
                   onPressed: () {
                     showSearch(context: context, delegate: DataSearch(list: items));
                   },
@@ -107,6 +107,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+var suggestionlist;
 
 class DataSearch extends SearchDelegate {
 
@@ -152,16 +154,15 @@ class DataSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Implement buildResults
-    throw UnimplementedError();
+    return AllCountries(info: suggestionlist);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //search suggestions
-    final suggestionlist = query.isEmpty ? list 
+    suggestionlist = query.isEmpty ? list 
     : list.where((element) => element.country.startsWith(query.substring(0,1)
     .toUpperCase() + query.substring(1,query.length))).toList();
-
     return AllCountries(info: suggestionlist);
   }
   
