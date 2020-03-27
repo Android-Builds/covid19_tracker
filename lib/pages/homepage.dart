@@ -1,3 +1,4 @@
+import 'package:covid19_tracker/models/datasearch.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/splashscreen.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
@@ -20,21 +21,27 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    items = duplicateItems = widget.info;
+    latestcount = widget.latest;
+    infolist = widget.info;
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+  List<Info> infolist;
+  Latest latestcount = new Latest();
 
-  List<Info> duplicateItems;
-  List<Info> items;
+  Future<Null> _refreshGlobal() {
+    return getLatest().then((_latest) {
+      setState(() {
+        latestcount = widget.latest;
+      });
+    });
+  }
 
-  Future<Null> _refresh() {
-    // return fetchPost().then((_posts) {
-    //   setState(() {
-    //     localposts = _posts;
-    //   });
-    // });
+  Future<Null> _refreshAll() {
+    return getInfo().then((_info) {
+      setState(() {
+        infolist = _info;
+      });
+    });
   }
 
 
@@ -63,32 +70,23 @@ class _HomePageState extends State<HomePage> {
               elevation: 0.0,
               backgroundColor: Colors.transparent,
               bottom: TabBar(
+                indicatorWeight: 2,
+                labelColor: getColor(context),
+                isScrollable: true,
                 tabs: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Global',
-                      style: TextStyle(
-                        color: getColor(context)
-                      ),
-                    ),
+                  Tab(
+                    text: 'Global',
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Countries',
-                      style: TextStyle(
-                        color: getColor(context)
-                      ),                      
-                    ),
-                  ),
+                  Tab(
+                    text: 'Countries',
+                  )
                 ]
               ),
               actions: <Widget>[
                 IconButton(
                   color: getColor(context),
                   onPressed: () {
-                    showSearch(context: context, delegate: DataSearch(list: items));
+                    showSearch(context: context, delegate: DataSearch(list: infolist));
                   },
                   icon: Icon(Icons.search),
                   splashColor: Colors.transparent,
@@ -97,8 +95,19 @@ class _HomePageState extends State<HomePage> {
             ),
             body: TabBarView(
               children: <Widget>[
-                GlobalPage(latest: widget.latest, info: items),
-                AllCountries(info: widget.info)
+                RefreshIndicator(
+                  key: new GlobalKey<RefreshIndicatorState>(),
+                  onRefresh: () => _refreshGlobal(),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: GlobalPage(latest: latestcount)
+                  ),
+                ),
+                RefreshIndicator(
+                  key:new GlobalKey<RefreshIndicatorState>(),
+                  onRefresh: () => _refreshAll(),
+                  child: AllCountries(info: infolist),
+                ),
               ],
             )
           ),
@@ -106,64 +115,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-var suggestionlist;
-
-class DataSearch extends SearchDelegate {
-
-  DataSearch({this.list});
-
-  List<Info> list;
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    //action for app bar
-    return[
-      IconButton(
-        icon: Icon(Icons.clear), 
-        onPressed: () {
-          query = '';
-        }
-      )
-    ];
-  }
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
-    return themeData.copyWith(
-      backgroundColor: Theme.of(context).backgroundColor,
-    );
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    //leading icon on the left of the app bar
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow, 
-        progress: transitionAnimation
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    //Implement buildResults
-    return AllCountries(info: suggestionlist);
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    //search suggestions
-    suggestionlist = query.isEmpty ? list 
-    : list.where((element) => element.country.startsWith(query.substring(0,1)
-    .toUpperCase() + query.substring(1,query.length))).toList();
-    return AllCountries(info: suggestionlist);
-  }
-  
 }

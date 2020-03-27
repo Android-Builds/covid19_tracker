@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
@@ -12,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 
   List<Info> info = new List<Info>();
   Latest latest = new Latest();
-  List<Country> countries = new List<Country>();
+  List<IndiaState> indiaState = new List<IndiaState>();
 
   getcountry(){
     getInfo().then((_info) {
@@ -31,9 +32,17 @@ class SplashScreen extends StatefulWidget {
     });
   }
 
+  getstates() {
+    getIndia().then((value) {
+      indiaState = value;
+      print(indiaState.length);
+    });
+  }
+
    @override
    void initState(){
     super.initState();
+    getstates();
     getlatest();
     getcountry();
     // setcountrieslist();

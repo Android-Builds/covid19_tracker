@@ -42,7 +42,6 @@ class Latest {
   Latest({this.cases, this.deaths, this.recovered});
 
   factory Latest.fromJson(Map<String, dynamic> json) {
-    json = json;
     return Latest(
       cases: json['cases'],
       deaths: json['deaths'],
@@ -51,24 +50,6 @@ class Latest {
   }
 }
 
-class Country {
-  String country;
-  String code;
-  String province;
-
-  Country({this.country, this.code, this.province});
-
-  factory Country.fromJson(Map<String, dynamic> json) {
-    return Country(
-      country: json['country'],
-      code: json['country_code'],
-      province: json['province']
-    );
-  }
-}
-
-var keys;
-List<Country> countries = new List<Country>();
 List<String> countriess = new List<String>();
 List<Info> info = new List<Info>();
 
@@ -83,7 +64,6 @@ Future<List<Info>> getInfo() async {
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);
-    print(responseJson);
     if(responseJson.length>0){
       for(int i=0; i<responseJson.length; i++){
         if(responseJson[i] != null){

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:covid19_tracker/models/stats.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:covid19_tracker/pages/splashscreen.dart';
 import 'package:flutter/material.dart';
 
 class CountryStats extends StatefulWidget {
@@ -99,8 +100,15 @@ class _CountryStatsState extends State<CountryStats> {
   Widget myWidget() {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.country),
+        title: Text(
+          widget.country,
+          style: TextStyle(
+            color: getColor(context)
+          ),
+        ),
         centerTitle: true,
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Container(
@@ -111,20 +119,32 @@ class _CountryStatsState extends State<CountryStats> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: <Widget>[
-                  Text(
-                    "Statistical data since 22/01/2020",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Expanded(
-                    child: new charts.TimeSeriesChart(
+                    child: charts.TimeSeriesChart(
                       _getSeriesData(), 
                       animate: true, 
                       dateTimeFactory: const charts.LocalDateTimeFactory(),
+                      domainAxis: charts.DateTimeAxisSpec(
+                        renderSpec: charts.SmallTickRendererSpec(
+                          labelStyle: charts.TextStyleSpec(
+                            color: MediaQuery.of(context).platformBrightness
+                             == Brightness.dark ? charts.MaterialPalette.white 
+                             : charts.MaterialPalette.black,
+                          ),
+                        )
+                      ),
+                      primaryMeasureAxis: charts.NumericAxisSpec(
+                        renderSpec: charts.GridlineRendererSpec(
+                          labelStyle: charts.TextStyleSpec(
+                            color: MediaQuery.of(context).platformBrightness
+                             == Brightness.dark ? charts.MaterialPalette.white 
+                             : charts.MaterialPalette.black,
+                          ),
+                          lineStyle: charts.LineStyleSpec(
+                            color: charts.MaterialPalette.transparent,
+                          ),
+                        )
+                      ),
                     ),
                   ),
                 ],
