@@ -9,17 +9,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^0.1.2
+  cupertino_icons:
+  http:
+  charts_flutter:
+  flutter_svg:
+  built_path: 
+  built_path_annotations:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  http:
-  charts_flutter:
-  flutter_svg:
+  build_runner:
+
+dependency_overrides:
+  analyzer:
+  build: 
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/  
+    - assets/

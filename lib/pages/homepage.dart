@@ -1,4 +1,5 @@
 import 'package:covid19_tracker/models/datasearch.dart';
+import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/splashscreen.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
@@ -6,12 +7,12 @@ import 'package:covid19_tracker/pages/tabs/global.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.latest, this.info}) 
+  HomePage({Key key, this.title, this.latest, this.info, this.indiastates}) 
   : super(key: key);
   final String title;
   final Latest latest;
   final List<Info> info;
-
+  final List<IndiaState> indiastates;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -23,15 +24,23 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     latestcount = widget.latest;
     infolist = widget.info;
+    indianstates = widget.indiastates;
+    for(int i=0; i<infolist.length; i++) {
+      if(infolist[i].country == 'India') {
+        india = infolist[i];
+      }
+    }
   }
 
-  List<Info> infolist;
+  List<Info> infolist = new List<Info>();
+  var india;
   Latest latestcount = new Latest();
+  List<IndiaState> indianstates = new List<IndiaState>();
 
   Future<Null> _refreshGlobal() {
     return getLatest().then((_latest) {
       setState(() {
-        latestcount = widget.latest;
+        latestcount = _latest;
       });
     });
   }
@@ -40,6 +49,11 @@ class _HomePageState extends State<HomePage> {
     return getInfo().then((_info) {
       setState(() {
         infolist = _info;
+        for(int i=0; i<infolist.length; i++) {
+          if(infolist[i].country == 'India') {
+            india = infolist[i];
+          }
+        }
       });
     });
   }
@@ -100,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                   onRefresh: () => _refreshGlobal(),
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    child: GlobalPage(latest: latestcount)
+                    child: GlobalPage(latest: latestcount, indiastates: indianstates, india: india)
                   ),
                 ),
                 RefreshIndicator(

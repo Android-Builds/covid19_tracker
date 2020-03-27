@@ -35,7 +35,6 @@ class SplashScreen extends StatefulWidget {
   getstates() {
     getIndia().then((value) {
       indiaState = value;
-      print(indiaState.length);
     });
   }
 
@@ -78,6 +77,10 @@ class SplashScreen extends StatefulWidget {
                       letterSpacing: 3.0
                     ),
                   ),
+                  SizedBox(
+                    height: 40.0,
+                  ),
+                  CircularProgressIndicator()
                 ],
               ),
             ],

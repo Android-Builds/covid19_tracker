@@ -29,7 +29,7 @@ class _AllCountriesState extends State<AllCountries> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: MediaQuery.of(context).platformBrightness == 
-                    Brightness.dark ? Colors.black87 : Colors.white,
+                    Brightness.dark ? Colors.black45 : Colors.white,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
