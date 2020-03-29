@@ -15,13 +15,19 @@ dependencies:
   flutter_svg:
   built_path: 
   built_path_annotations:
-  url_launcher: 
+  url_launcher:
   flutter_email_sender:
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
+
+flutter_icons:    
+ android: "launcher_icon"    
+ ios: true    
+ image_path: "assets/icon.png"
 
 dependency_overrides:
   analyzer:

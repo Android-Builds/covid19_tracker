@@ -12,9 +12,23 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            child: Text('Covid-19 Tracker'),
-            decoration: BoxDecoration(
+          Container(
+            height: 220.0,
+            child: DrawerHeader(
+              child: Stack(
+                children: <Widget>[
+                  Center(
+                    child: Image.asset(
+                      'assets/corona.png',
+                      scale: 0.8,
+                    ),
+                  ),
+                  Positioned(
+                    left: 5.0,
+                    child: Text('Covid-19 Tracker'),
+                  ),
+                ],
+              ),
             ),
           ),
           ListTile(

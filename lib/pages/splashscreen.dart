@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
+import 'package:covid19_tracker/models/inddata.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,10 @@ class SplashScreen extends StatefulWidget {
     getstates();
     getlatest();
     getcountry();
+    HashMap states;
+    getStateData().then((value) {
+      print(value[0].state);
+    });
     // setcountrieslist();
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
