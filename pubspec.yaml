@@ -15,6 +15,8 @@ dependencies:
   flutter_svg:
   built_path: 
   built_path_annotations:
+  url_launcher: 
+  flutter_email_sender:
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +31,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+
+  fonts:
+    - family: Telegram
+      fonts:
+        - asset: icons/Telegram.ttf

@@ -76,12 +76,12 @@ class IndiaWidget extends StatelessWidget {
             )
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
                 'State Wise',
                 style: TextStyle(
-                  fontSize: 18.0
+                  fontSize: 15.0
                 ),
               ),
             ),

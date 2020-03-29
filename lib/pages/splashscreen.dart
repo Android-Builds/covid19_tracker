@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:covid19_tracker/models/indiastatewise.dart';
+import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
@@ -89,11 +90,3 @@ class SplashScreen extends StatefulWidget {
      );
    }
  }
-
- getColor(BuildContext context) {
-  var brightness = MediaQuery.of(context).platformBrightness;
-  if (brightness == Brightness.dark)
-    return Colors.white;
-  else
-    return Colors.black;
-}

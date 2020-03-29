@@ -1,9 +1,10 @@
 import 'package:covid19_tracker/models/datasearch.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
-import 'package:covid19_tracker/pages/splashscreen.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
 import 'package:covid19_tracker/pages/tabs/global.dart';
+import 'package:covid19_tracker/widgets/drawer.dart';
+import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              iconTheme: getIconTheme(context),
               title: Text(
                 widget.title,
                 style: TextStyle(
@@ -107,6 +109,7 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
+            drawer: AppDrawer(),
             body: TabBarView(
               children: <Widget>[
                 RefreshIndicator(
