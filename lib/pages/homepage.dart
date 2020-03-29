@@ -35,8 +35,10 @@ class _HomePageState extends State<HomePage> {
 
   List<Info> infolist = new List<Info>();
   var india;
+  int i = 0;
   Latest latestcount = new Latest();
   List<IndiaState> indianstates = new List<IndiaState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<Null> _refreshGlobal() {
     return getLatest().then((_latest) {
@@ -59,74 +61,91 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<bool> _onWillPop() async {
+    i++;
+    if(i<2) {
+      _scaffoldKey.currentState.showSnackBar(
+       new SnackBar(
+          content: new Text('Press again to exit')
+        )
+      );
+    } else {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      darkTheme: ThemeData.dark().copyWith(
-        backgroundColor: Colors.black
-      ),
-      home: SafeArea(
-        child: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              iconTheme: getIconTheme(context),
-              title: Text(
-                widget.title,
-                style: TextStyle(
-                  color: getColor(context),
-                ),
-              ),
-              centerTitle: true,
-              elevation: 0.0,
-              backgroundColor: Colors.transparent,
-              bottom: TabBar(
-                indicatorWeight: 2,
-                labelColor: getColor(context),
-                isScrollable: true,
-                tabs: <Widget>[
-                  Tab(
-                    text: 'Global',
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        darkTheme: ThemeData.dark().copyWith(
+          backgroundColor: Colors.black
+        ),
+        home: SafeArea(
+          child: DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              key: _scaffoldKey,
+              appBar: AppBar(
+                iconTheme: getIconTheme(context),
+                title: Text(
+                  widget.title,
+                  style: TextStyle(
+                    color: getColor(context),
                   ),
-                  Tab(
-                    text: 'Countries',
+                ),
+                centerTitle: true,
+                elevation: 0.0,
+                backgroundColor: Colors.transparent,
+                bottom: TabBar(
+                  indicatorWeight: 2,
+                  labelColor: getColor(context),
+                  isScrollable: true,
+                  tabs: <Widget>[
+                    Tab(
+                      text: 'Global',
+                    ),
+                    Tab(
+                      text: 'Countries',
+                    )
+                  ]
+                ),
+                actions: <Widget>[
+                  IconButton(
+                    color: getColor(context),
+                    onPressed: () {
+                      showSearch(context: context, delegate: DataSearch(list: infolist));
+                    },
+                    icon: Icon(Icons.search),
+                    splashColor: Colors.transparent,
                   )
-                ]
+                ],
               ),
-              actions: <Widget>[
-                IconButton(
-                  color: getColor(context),
-                  onPressed: () {
-                    showSearch(context: context, delegate: DataSearch(list: infolist));
-                  },
-                  icon: Icon(Icons.search),
-                  splashColor: Colors.transparent,
-                )
-              ],
-            ),
-            drawer: AppDrawer(),
-            body: TabBarView(
-              children: <Widget>[
-                RefreshIndicator(
-                  key: new GlobalKey<RefreshIndicatorState>(),
-                  onRefresh: () => _refreshGlobal(),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: GlobalPage(latest: latestcount, indiastates: indianstates, india: india)
+              drawer: AppDrawer(),
+              body: TabBarView(
+                children: <Widget>[
+                  RefreshIndicator(
+                    key: new GlobalKey<RefreshIndicatorState>(),
+                    onRefresh: () => _refreshGlobal(),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: GlobalPage(latest: latestcount, indiastates: indianstates, india: india)
+                    ),
                   ),
-                ),
-                RefreshIndicator(
-                  key:new GlobalKey<RefreshIndicatorState>(),
-                  onRefresh: () => _refreshAll(),
-                  child: AllCountries(info: infolist),
-                ),
-              ],
-            )
+                  RefreshIndicator(
+                    key:new GlobalKey<RefreshIndicatorState>(),
+                    onRefresh: () => _refreshAll(),
+                    child: AllCountries(info: infolist),
+                  ),
+                ],
+              )
+            ),
           ),
         ),
       ),
