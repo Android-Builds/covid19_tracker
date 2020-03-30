@@ -21,6 +21,7 @@ dependencies:
   shared_preferences:
   share:
   firebase_messaging:
+  flutter_icons:
 
 dev_dependencies:
   flutter_test:

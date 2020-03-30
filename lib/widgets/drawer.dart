@@ -38,7 +38,7 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               final RenderBox box = context.findRenderObject();
-              Share.share('Share the app with your friends',
+              Share.share('Share with poeple \nhttps://drive.google.com/file/d/1P7uFJyPRP92cjnNLtHo7Q2l7d3AWqLEt/view?usp=drivesdk',
                 sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
             },
           ),          
