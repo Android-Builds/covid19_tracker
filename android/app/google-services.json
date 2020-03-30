@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1008652041675",
+    "firebase_url": "https://covid-19-tacker.firebaseio.com",
+    "project_id": "covid-19-tacker",
+    "storage_bucket": "covid-19-tacker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008652041675:android:451cea300b1b2196c2ca4e",
+        "android_client_info": {
+          "package_name": "com.sudodev.covidtraker.covid19_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008652041675-olte2sej04l873kvtfmqv63u7bl0ld8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgk59GOh72KehEp-LD7iQi5QgfTUYUqGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008652041675-olte2sej04l873kvtfmqv63u7bl0ld8c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

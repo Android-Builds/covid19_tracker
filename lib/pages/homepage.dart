@@ -30,9 +30,7 @@ class _HomePageState extends State<HomePage> {
     widget.latest != null ? latestcount = widget.latest 
     : latestcount = widget.savedlatest;
     infolist = widget.info;
-    // saveValues();
     indianstates = widget.indiastates;
-    print(widget.savedlatest.cases);
     for(int i=0; i<infolist.length; i++) {
       if(infolist[i].country == 'India') {
         india = infolist[i];

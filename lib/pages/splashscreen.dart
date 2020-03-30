@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
 import 'package:covid19_tracker/models/inddata.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
+import 'package:covid19_tracker/widgets/pushnotification.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
@@ -31,7 +31,7 @@ class SplashScreen extends StatefulWidget {
       var l = Latest.fromJson(await read('latest'));
       savedlatest = l;
     } catch (Excepetion) {
-      // do something
+      print('Failed to loead saved');
     }
   }
 
@@ -65,6 +65,8 @@ class SplashScreen extends StatefulWidget {
     getlatest();
     getcountry();
     loadSharedPrefs();
+    PushNotificationsManager pushNotificationsManager = new PushNotificationsManager();
+    pushNotificationsManager.init();
     getStateData().then((value) {
       print(value[0].state);
     });
