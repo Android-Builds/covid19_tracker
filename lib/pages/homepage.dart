@@ -5,6 +5,7 @@ import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
 import 'package:covid19_tracker/pages/tabs/global.dart';
 import 'package:covid19_tracker/widgets/drawer.dart';
+import 'package:covid19_tracker/widgets/scrollbehavior.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,6 +92,12 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child,
+          );
+        },
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,

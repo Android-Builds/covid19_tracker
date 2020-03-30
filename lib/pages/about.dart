@@ -68,6 +68,7 @@ class AboutPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     FlatButton(
+                      splashColor: Colors.transparent,
                       onPressed: () async {
                         await FlutterEmailSender.send(email);
                       },
@@ -76,6 +77,7 @@ class AboutPage extends StatelessWidget {
                       )
                     ),
                     FlatButton(
+                      splashColor: Colors.transparent,
                       onPressed: () async {
                         _launchURL('https://t.me/xyron');
                       },
@@ -84,6 +86,7 @@ class AboutPage extends StatelessWidget {
                       )
                     ),
                     FlatButton(
+                      splashColor: Colors.transparent,
                       onPressed: () async {
                         _launchURL('https://github.com/xayron');
                       },
@@ -118,7 +121,7 @@ class AboutPage extends StatelessWidget {
                             height: 20.0,
                             width: 200.0,
                             child: Divider(
-                              color: Colors.grey,
+                              color: getColor(context),
                             ),
                           ),
                           Text(

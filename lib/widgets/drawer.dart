@@ -38,8 +38,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               final RenderBox box = context.findRenderObject();
-              Share.share('Share with poeple \nhttps://drive.google.com/file/d/1P7uFJyPRP92cjnNLtHo7Q2l7d3AWqLEt/view?usp=drivesdk',
-                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+              Share.share('Track the cases of covid-19 cases with real time sata. Covid-19 Tracker \n\nhttps://drive.google.com/file/d/1P7uFJyPRP92cjnNLtHo7Q2l7d3AWqLEt/view?usp=drivesdk', 
+                subject: 'Share the app', sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
             },
           ),          
           ListTile(
