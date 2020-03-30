@@ -37,15 +37,15 @@ class AboutPage extends StatelessWidget {
               Text(
                 'Covid-19 Tracker',
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 20.0,
                   color: getColor(context),
                 ),
               ),
               SizedBox(height: 20.0),
               Text(
-                  'sudo.dev',
+                  'By: sudo.dev',
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 15.0,
                   color: Colors.grey,
                 ),
               ),
@@ -78,6 +78,44 @@ class AboutPage extends StatelessWidget {
                   ),                  
                 ],
               ),
+              SizedBox(height: 20.0),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  height: 250.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.grey[800]
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Credits and thanks to',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                          width: 200.0,
+                          child: Divider(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text('* App icon: icons8.com'),
+                        Text('* API(s) : \n1. github.com/novelcovid/api' 
+                        '\n2. github.com/covid19india/api'),
+                        Text('* The author of the plugins used'),
+                        Text('* All google medium and stackoverflow articles I referred to'),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -37,7 +37,7 @@ class IndiaWidget extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 20.0,
-                  width: 200,
+                  width: 100,
                   child: Divider(
                     thickness: 2.0,
                   ),
@@ -87,7 +87,7 @@ class IndiaWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 100.0,
+            width: 90.0,
             child: Divider(
               thickness: 2,
             ),

@@ -34,7 +34,7 @@ class GlobalCount extends StatelessWidget {
           ),
           SizedBox(
             height: 20.0,
-            width: 200,
+            width: 100,
             child: Divider(
               thickness: 2.0,
             ),

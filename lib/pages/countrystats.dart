@@ -158,7 +158,20 @@ class _CountryStatsState extends State<CountryStats> {
                       SizedBox(width: 10.0),
                       Text('Deaths')
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    width: 50.0,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 5.0,
+                      ),
+                      SizedBox(width: 10.0),
+                      Text('Recovered')
+                    ],
+                  )                  
                 ],
               ),
               SizedBox(height: 20.0)

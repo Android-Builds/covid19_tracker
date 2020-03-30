@@ -87,7 +87,8 @@ class SplashScreen extends StatefulWidget {
            children: <Widget>[
              Container(
                decoration: BoxDecoration(
-                 color: Theme.of(context).backgroundColor,
+                 color: MediaQuery.of(context).platformBrightness == 
+                 Brightness.dark ? Colors.grey[900] : Colors.white,
                 ),
               ),
               Column(
@@ -103,15 +104,17 @@ class SplashScreen extends StatefulWidget {
                     'Covid-19 Tracker',
                     style: TextStyle(
                       color:getColor(context),
-                      fontSize: 20.0,
+                      fontSize: 15.0,
                       // fontFamily: 'ShadowsIntoLight',
                       // letterSpacing: 3.0
                     ),
                   ),
                   SizedBox(
-                    height: 40.0,
+                    height: 100.0,
                   ),
-                  CircularProgressIndicator()
+                  CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                  )
                 ],
               ),
             ],
