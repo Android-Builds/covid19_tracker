@@ -1,4 +1,3 @@
-
 import 'package:covid19_tracker/models/info.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ class GlobalCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(latest.cases);
     return Container(
       height: 190,
       width: MediaQuery.of(context).size.width,
@@ -40,26 +40,26 @@ class GlobalCount extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.0),
-          Text(
+          latest.cases != null ? Text(
             'Confirmed: ' + latest.cases.toString(),
             style: TextStyle(
               fontSize: 15.0
             ),
-          ),
+          ):  Text('0'),
           SizedBox(height: 20.0),
-          Text(
+          latest.deaths != null ? Text(
             'Deaths: ' + latest.deaths.toString(),
             style: TextStyle(
               fontSize: 15.0
             )                  
-          ),
+          ):  Text('0'),
           SizedBox(height: 20.0),
-          Text(
+          latest.recovered != null ? Text(
             'Recovered: ' + latest.recovered.toString(),
             style: TextStyle(
               fontSize: 15.0
             ),
-          ),
+          ):  Text('0'),
         ],
       ),
     );

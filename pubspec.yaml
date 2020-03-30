@@ -18,6 +18,8 @@ dependencies:
   url_launcher:
   flutter_email_sender:
   flutter_launcher_icons:
+  shared_preferences:
+  share:
 
 dev_dependencies:
   flutter_test:

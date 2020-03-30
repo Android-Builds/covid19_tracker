@@ -50,23 +50,23 @@ class IndiaWidget extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text('Confirmed: ' + india.cases),
+                          india.cases != null ? Text('Confirmed: ' + india.cases) : Text('0'),
                           SizedBox(height:10.0),
-                          Text('Deaths: ' + india.deaths),
+                          india.deaths != null ? Text('Deaths: ' + india.deaths) : Text('0'),
                           SizedBox(height:10.0),
-                          Text('Recovered: ' + india.recovered)
+                          india.recovered != null ? Text('Recovered: ' + india.recovered) : Text('0')
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Text('Active: ' + india.active),
+                          india.active != null ? Text('Active: ' + india.active): Text('0'),
                           SizedBox(height:10.0),
-                          Text('Critical: ' + india.critical),
+                          india.critical != null ? Text('Critical: ' + india.critical) : Text('0'),
                           SizedBox(height:10.0),
-                          Text('Cases Today: ' + india.todayCases),
+                          india.todayCases != null ? Text('Cases Today: ' + india.todayCases) : Text('0'),
                           SizedBox(height: 10.0),
-                          Text('Deaths Today: ' + india.todayDeaths),
+                          india.todayDeaths != null ? Text('Deaths Today: ' + india.todayDeaths) : Text('0'),
                         ],
                       )
                     ],

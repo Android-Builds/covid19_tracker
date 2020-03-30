@@ -1,5 +1,6 @@
 import 'package:covid19_tracker/pages/about.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -36,6 +37,9 @@ class AppDrawer extends StatelessWidget {
             title: Text('Share'),
             onTap: () {
               Navigator.pop(context);
+              final RenderBox box = context.findRenderObject();
+              Share.share('Share the app with your friends',
+                sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
             },
           ),          
           ListTile(

@@ -21,10 +21,6 @@ class _GlobalPageState extends State<GlobalPage> {
     super.initState();
     if(widget.india.active != null) {
       india = widget.india;
-    } else {
-      india.active = india.cases = india.critical = 
-      india.deaths = india.recovered = india.todayCases = 
-      india.todayDeaths = 0.toString();
     }
   }
 

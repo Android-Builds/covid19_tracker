@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 import 'package:covid19_tracker/models/inddata.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
    @override
@@ -16,7 +18,22 @@ class SplashScreen extends StatefulWidget {
 
   List<Info> info = new List<Info>();
   Latest latest = new Latest();
+  Latest savedlatest = new Latest();
   List<IndiaState> indiaState = new List<IndiaState>();
+
+  read(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return json.decode(prefs.getString(key));
+  }
+
+  loadSharedPrefs() async {
+    try {
+      var l = Latest.fromJson(await read('latest'));
+      savedlatest = l;
+    } catch (Excepetion) {
+      // do something
+    }
+  }
 
   getcountry(){
     getInfo().then((_info) {
@@ -47,15 +64,14 @@ class SplashScreen extends StatefulWidget {
     getstates();
     getlatest();
     getcountry();
-    HashMap states;
+    loadSharedPrefs();
     getStateData().then((value) {
       print(value[0].state);
     });
-    // setcountrieslist();
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
         builder: (context) => HomePage(title: 'Covid-19 Tracker', 
-        latest: latest, info: info));
+        latest: latest, info: info, savedlatest: savedlatest,));
       Navigator.pushReplacement(context, route);
     });
   }
@@ -75,13 +91,19 @@ class SplashScreen extends StatefulWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset(
+                    'assets/corona.png'
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
                   Text(
                     'Covid-19 Tracker',
                     style: TextStyle(
                       color:getColor(context),
-                      fontSize: 30.0,
-                      fontFamily: 'ShadowsIntoLight',
-                      letterSpacing: 3.0
+                      fontSize: 20.0,
+                      // fontFamily: 'ShadowsIntoLight',
+                      // letterSpacing: 3.0
                     ),
                   ),
                   SizedBox(

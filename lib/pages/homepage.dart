@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:covid19_tracker/models/datasearch.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
@@ -6,12 +7,15 @@ import 'package:covid19_tracker/pages/tabs/global.dart';
 import 'package:covid19_tracker/widgets/drawer.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.latest, this.info, this.indiastates}) 
+  HomePage({Key key, this.title, this.latest, 
+  this.info, this.indiastates, this.savedlatest})
   : super(key: key);
   final String title;
   final Latest latest;
+  final Latest savedlatest;
   final List<Info> info;
   final List<IndiaState> indiastates;
   @override
@@ -23,9 +27,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    latestcount = widget.latest;
+    widget.latest != null ? latestcount = widget.latest 
+    : latestcount = widget.savedlatest;
     infolist = widget.info;
+    // saveValues();
     indianstates = widget.indiastates;
+    print(widget.savedlatest.cases);
     for(int i=0; i<infolist.length; i++) {
       if(infolist[i].country == 'India') {
         india = infolist[i];
@@ -61,9 +68,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  saveValues(value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('latest', json.encode(value));
+  }
+
   Future<bool> _onWillPop() async {
     i++;
     if(i<2) {
+      saveValues(latestcount);
       _scaffoldKey.currentState.showSnackBar(
        new SnackBar(
           content: new Text('Press again to exit')
@@ -120,7 +133,8 @@ class _HomePageState extends State<HomePage> {
                   IconButton(
                     color: getColor(context),
                     onPressed: () {
-                      showSearch(context: context, delegate: DataSearch(list: infolist));
+                      showSearch(context: context, 
+                      delegate: DataSearch(list: infolist));
                     },
                     icon: Icon(Icons.search),
                     splashColor: Colors.transparent,
@@ -135,7 +149,8 @@ class _HomePageState extends State<HomePage> {
                     onRefresh: () => _refreshGlobal(),
                     child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
-                      child: GlobalPage(latest: latestcount, indiastates: indianstates, india: india)
+                      child: GlobalPage(latest: latestcount, 
+                      indiastates: indianstates, india: india)
                     ),
                   ),
                   RefreshIndicator(

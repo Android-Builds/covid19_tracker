@@ -41,6 +41,12 @@ class Latest {
 
   Latest({this.cases, this.deaths, this.recovered});
 
+  Map<String, dynamic> toJson() => {
+      'cases': cases,
+      'deaths': deaths,
+      'recovered': recovered,
+    };
+
   factory Latest.fromJson(Map<String, dynamic> json) {
     return Latest(
       cases: json['cases'],
