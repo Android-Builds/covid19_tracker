@@ -40,26 +40,42 @@ class GlobalCount extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.0),
-          latest.cases != null ? Text(
-            'Confirmed: ' + latest.cases.toString(),
-            style: TextStyle(
-              fontSize: 15.0
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    latest.cases != null ? Text(
+                      'Confirmed: ' + latest.cases.toString(),
+                    ):  Text('0'),
+                    SizedBox(height: 20.0),
+                    latest.deaths != null ? Text(
+                      'Deaths: ' + latest.deaths.toString(),              
+                    ):  Text('0'),
+                    SizedBox(height: 20.0),
+                    latest.recovered != null ? Text(
+                      'Recovered: ' + latest.recovered.toString(),
+                    ):  Text('0'),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    latest.cases != null ? Text(
+                      'Active: ' + latest.active.toString(),
+                    ):  Text('0'),
+                    SizedBox(height: 20.0),
+                    latest.deaths != null ? Text(
+                      'Affected - \nCountries: ' + latest.affectedCountries.toString(),                
+                    ):  Text('0'),                
+                  ],
+                ),
+              ],
             ),
-          ):  Text('0'),
-          SizedBox(height: 20.0),
-          latest.deaths != null ? Text(
-            'Deaths: ' + latest.deaths.toString(),
-            style: TextStyle(
-              fontSize: 15.0
-            )                  
-          ):  Text('0'),
-          SizedBox(height: 20.0),
-          latest.recovered != null ? Text(
-            'Recovered: ' + latest.recovered.toString(),
-            style: TextStyle(
-              fontSize: 15.0
-            ),
-          ):  Text('0'),
+          ),
         ],
       ),
     );

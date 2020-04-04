@@ -4,6 +4,7 @@ import 'package:covid19_tracker/models/inddata.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/pushnotification.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19_tracker/pages/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
@@ -65,15 +66,13 @@ class SplashScreen extends StatefulWidget {
     getlatest();
     getcountry();
     loadSharedPrefs();
-    PushNotificationsManager pushNotificationsManager = new PushNotificationsManager();
-    pushNotificationsManager.init();
     getStateData().then((value) {
       print(value[0].state);
     });
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
         builder: (context) => HomePage(title: 'Covid-19 Tracker', 
-        latest: latest, info: info, savedlatest: savedlatest,));
+        latest: latest, info: info, savedlatest: savedlatest));
       Navigator.pushReplacement(context, route);
     });
   }

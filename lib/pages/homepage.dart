@@ -8,6 +8,7 @@ import 'package:covid19_tracker/widgets/drawer.dart';
 import 'package:covid19_tracker/widgets/scrollbehavior.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,9 +26,48 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+
+  configureFirebase() async {
+    _firebaseMessaging.requestNotificationPermissions();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        if(!_isDoubleMessage) {
+          print("onMessage: $message");
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: ListTile(
+                title: Text(message['notification']['title']),
+                subtitle: Text(message['notification']['body']),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Ok'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
+        }
+        _isDoubleMessage = !_isDoubleMessage;
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // TODO optional
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // TODO optional
+      },
+    );
+    String token = await _firebaseMessaging.getToken();
+    print("FirebaseMessaging token: $token");
+  }
+
   @override
   void initState() {
     super.initState();
+    configureFirebase();
     widget.latest != null ? latestcount = widget.latest 
     : latestcount = widget.savedlatest;
     infolist = widget.info;
@@ -45,6 +85,8 @@ class _HomePageState extends State<HomePage> {
   Latest latestcount = new Latest();
   List<IndiaState> indianstates = new List<IndiaState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  static bool _isDoubleMessage = false;
 
   Future<Null> _refreshGlobal() {
     return getLatest().then((_latest) {

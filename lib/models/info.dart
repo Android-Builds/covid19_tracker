@@ -37,13 +37,17 @@ class Info {
 class Latest {
   int cases;
   int deaths;
+  int active;
   int recovered;
+  int affectedCountries;
 
-  Latest({this.cases, this.deaths, this.recovered});
+  Latest({this.cases, this.deaths, 
+  this.active, this.recovered, this.affectedCountries});
 
   Map<String, dynamic> toJson() => {
       'cases': cases,
       'deaths': deaths,
+      'active' : active,
       'recovered': recovered,
     };
 
@@ -51,7 +55,9 @@ class Latest {
     return Latest(
       cases: json['cases'],
       deaths: json['deaths'],
-      recovered: json['recovered']
+      recovered: json['recovered'],
+      active: json['active'],
+      affectedCountries: json['affectedCountries']
     );
   }
 }
