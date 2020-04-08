@@ -15,3 +15,10 @@ getIconTheme(context) {
   else
     return Colors.black;
 }
+getTheme(BuildContext context) {
+  var brightness = MediaQuery.of(context).platformBrightness;
+  if (brightness == Brightness.dark)
+    return 'Dark';
+  else
+    return 'Light';
+}

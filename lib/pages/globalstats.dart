@@ -74,21 +74,21 @@ class _GlobalStatsState extends State<GlobalStats> {
         data: casedata,
         domainFn: (GlobalData data, _) => data.date,
         measureFn: (GlobalData data, _) => data.confirm,
-        colorFn: (GlobalData data, _) => charts.MaterialPalette.red.shadeDefault
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.red.shadeDefault.lighter
       ),
       charts.Series(
         id: "Deaths",
         data: deathdata,
         domainFn: (GlobalData data, _) => data.date,
         measureFn: (GlobalData data, _) => data.confirm,
-        colorFn: (GlobalData data, _) => charts.MaterialPalette.blue.shadeDefault
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.blue.shadeDefault.lighter
       ),
       charts.Series(
         id: "Recovered",
         data: recovereddata,
         domainFn: (GlobalData data, _) => data.date,
         measureFn: (GlobalData data, _) => data.confirm,
-        colorFn: (GlobalData data, _) => charts.MaterialPalette.green.shadeDefault
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.green.shadeDefault.lighter
       )
     ];
     return series;
@@ -96,12 +96,20 @@ class _GlobalStatsState extends State<GlobalStats> {
 
   Widget myWidget() {
     return Container(
-      height: 500.0,
+      height: 600.0,
       padding: EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
+            Text(
+              'Timline of Spread',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            SizedBox(height: 20.0),
             Expanded(
               child: charts.TimeSeriesChart(
                 _getSeriesData(),

@@ -2,7 +2,6 @@ import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/globalstats.dart';
 import 'package:covid19_tracker/widgets/globalcount.dart';
-import 'package:covid19_tracker/widgets/indiawidget.dart';
 import 'package:covid19_tracker/widgets/piechart.dart';
 import 'package:flutter/material.dart';
 

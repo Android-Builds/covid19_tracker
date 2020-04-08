@@ -1,4 +1,5 @@
 import 'package:covid19_tracker/models/info.dart';
+import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -7,6 +8,7 @@ class PieChart extends StatelessWidget {
   PieChart({this.latest});
 
   final Latest latest;
+  final red = charts.MaterialPalette.red.makeShades(3);
 
   _getSeriesData() {
     var active = double.parse((latest.active/latest.cases).toStringAsFixed(2))*100;  // double.parse((latest.active/latest.cases).toStringAsFixed(3))*100;
@@ -23,8 +25,16 @@ class PieChart extends StatelessWidget {
         id: "Global Data",
         data: data,
         labelAccessorFn: (GlobalData row, _) => '${row.parameters}: \n${row.percentage} %',
-        domainFn: (GlobalData grades, _) => grades.parameters,
-        measureFn: (GlobalData grades, _) => grades.percentage
+        domainFn: (GlobalData globalData, _) => globalData.parameters,
+        measureFn: (GlobalData globalData, _) => globalData.percentage,
+        colorFn: (GlobalData globalData, _) {
+          switch(globalData.parameters) {
+            case 'Active' : return charts.MaterialPalette.blue.shadeDefault.lighter;
+            case 'Deaths' : return charts.MaterialPalette.red.shadeDefault.lighter;
+            case 'Recovered' : return charts.MaterialPalette.green.shadeDefault.lighter;
+            default : return red[0];
+          }
+        },
       )
     ];
     return series;
@@ -58,7 +68,21 @@ class PieChart extends StatelessWidget {
                       animate: true,
                       defaultRenderer: new charts.ArcRendererConfig(
                         arcWidth: 20,
-                        arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                        arcRendererDecorators: [new charts.ArcLabelDecorator(
+                          leaderLineStyleSpec: charts.ArcLabelLeaderLineStyleSpec(
+                            color: getTheme(context) == 'Dark' ? 
+                              charts.Color.white : charts.Color.black,
+                            thickness: 1.0,
+                            length: 20.0
+                          ),
+                          leaderLineColor: getTheme(context) == 'Dark' ? 
+                              charts.Color.white : charts.Color.black,
+                          outsideLabelStyleSpec: charts.TextStyleSpec(
+                            color: getTheme(context) == 'Dark' ? 
+                              charts.Color.white : charts.Color.black,
+                            fontSize: 12,
+                          )
+                        )],
                       ),
                     ),
                   )
