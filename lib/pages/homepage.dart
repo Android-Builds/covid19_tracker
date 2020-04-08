@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                     key: new GlobalKey<RefreshIndicatorState>(),
                     onRefresh: () => _refreshGlobal(),
                     child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
+                      // physics: const AlwaysScrollableScrollPhysics(),
                       child: GlobalPage(latest: latestcount, 
                       indiastates: indianstates, india: india)
                     ),
