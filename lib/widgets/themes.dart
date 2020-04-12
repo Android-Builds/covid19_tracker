@@ -22,3 +22,28 @@ getTheme(BuildContext context) {
   else
     return 'Light';
 }
+
+TextStyle caseStyles = TextStyle(
+  fontSize: 15.0,
+  fontFamily: 'NewsCycle',
+  fontWeight: FontWeight.w700
+);
+
+TextStyle countryName = TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 20.0
+);
+
+TextStyle detailCaseStyles = TextStyle(
+  fontSize: 20.0,
+  fontFamily: 'NewsCycle',
+  fontWeight: FontWeight.w700
+);
+
+TextStyle chartText = TextStyle(
+  fontWeight: FontWeight.bold
+);
+
+TextStyle globalTile = new TextStyle(
+  fontWeight: FontWeight.bold
+);

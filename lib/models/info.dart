@@ -14,10 +14,12 @@ class Info {
   String active;
   String critical;
   String flag;
+  String deathsPerOneMillion;
+  String casesPerOneMillion;
 
   Info({this.cases, this.deaths, this.recovered, this.country, 
   this.todayCases, this.todayDeaths, this.active, this.critical,
-  this.flag});
+  this.flag, this.deathsPerOneMillion, this.casesPerOneMillion});
 
   factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
@@ -29,7 +31,9 @@ class Info {
       todayDeaths: json['todayDeaths'].toString(),
       active: json['active'].toString(),
       critical: json['critical'].toString(),
-      flag: json['countryInfo']['flag'].toString()
+      flag: json['countryInfo']['flag'].toString(),
+      deathsPerOneMillion: json['deathsPerOneMillion'].toString(),
+      casesPerOneMillion: json['deathsPerOneMillion'].toString(),
     );
   }
 }
@@ -39,10 +43,20 @@ class Latest {
   int deaths;
   int active;
   int recovered;
+  int critical;
+  int todayDeaths;
+  int todayCases;
+  int tests;
+  int casesPerOneMillion;
+  int deathsPerOneMillion;
+  double testsPerOneMillion;
   int affectedCountries;
 
   Latest({this.cases, this.deaths, 
-  this.active, this.recovered, this.affectedCountries});
+  this.active, this.recovered, this.affectedCountries,
+  this.casesPerOneMillion, this.critical, this.deathsPerOneMillion,
+  this.tests, this.testsPerOneMillion, this.todayCases,
+  this.todayDeaths});
 
   Map<String, dynamic> toJson() => {
       'cases': cases,
@@ -57,6 +71,13 @@ class Latest {
       deaths: json['deaths'],
       recovered: json['recovered'],
       active: json['active'],
+      critical: json['critical'],
+      tests: json['tests'],
+      todayCases: json['todayCases'],
+      todayDeaths: json['todayCases'],
+      casesPerOneMillion: json['casesPerOneMillion'],
+      deathsPerOneMillion: json['deathsPerOneMillion'],
+      testsPerOneMillion: json['testsPerOneMillion'],
       affectedCountries: json['affectedCountries']
     );
   }

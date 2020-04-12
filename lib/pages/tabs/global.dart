@@ -35,7 +35,6 @@ class _GlobalPageState extends State<GlobalPage> {
         children: <Widget>[
           GlobalCount(latest: widget.latest),
           SizedBox(height: 10.0),
-          // IndiaWidget(india: india),
           PieChart(latest: widget.latest),
           GlobalStats(),
         ],

@@ -41,8 +41,15 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/fonts/
 
   fonts:
-    - family: Telegram
+    - family: BenchNine
       fonts:
-        - asset: icons/Telegram.ttf
+        - asset: assets/fonts/BenchNine-Regular.ttf
+
+    - family: NewsCycle
+      fonts:
+        - asset: fonts/NewsCycle-Regular.ttf
+        - asset: fonts/NewsCycle-Bold.ttf
+          weight: 700

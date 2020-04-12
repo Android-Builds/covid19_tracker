@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:covid19_tracker/models/stats.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covid19_tracker/widgets/themes.dart';
@@ -105,9 +104,7 @@ class _GlobalStatsState extends State<GlobalStats> {
             Text(
               'Timline of Spread',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold
-              ),
+              style: chartText
             ),
             SizedBox(height: 20.0),
             Expanded(
