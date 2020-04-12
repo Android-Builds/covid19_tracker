@@ -22,18 +22,14 @@ class GlobalCount extends StatelessWidget {
           Brightness.dark ? Colors.grey[900] : Colors.white,
       elevation: 10.0,
       child: Container(
-        height: 380,
+        height: 400,
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'Cases',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontFamily: 'NewsCycle',
-                fontWeight: FontWeight.w700
-              ),
+              style: globalCardHead,
             ),
             SizedBox(
               height: 20.0,
@@ -57,6 +53,7 @@ class GlobalCount extends StatelessWidget {
                   SizedBox(height: 40.0),
                   GloablData(text: 'Current', active: latest.active.toString(), critical: latest.critical.toString(), 
                     recovered: latest.recovered.toString()),
+                  SizedBox(height: 10.0)
                 ],
               ),
             ),

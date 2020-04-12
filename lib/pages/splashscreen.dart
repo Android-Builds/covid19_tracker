@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
-import 'package:covid19_tracker/models/inddata.dart';
+import 'package:covid19_tracker/models/ind.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class SplashScreen extends StatefulWidget {
       var l = Latest.fromJson(await read('latest'));
       savedlatest = l;
     } catch (Excepetion) {
-      print('Failed to loead saved');
+      print('Failed to load saved');
     }
   }
 
@@ -64,9 +65,6 @@ class SplashScreen extends StatefulWidget {
     getlatest();
     getcountry();
     loadSharedPrefs();
-    getStateData().then((value) {
-      print(value[0].state);
-    });
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
         builder: (context) => HomePage(title: 'Covid-19 Tracker', 

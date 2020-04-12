@@ -45,5 +45,17 @@ TextStyle chartText = TextStyle(
 );
 
 TextStyle globalTile = new TextStyle(
+  fontFamily: 'NewsCycle',
   fontWeight: FontWeight.bold
+);
+
+TextStyle globalCardHead = new TextStyle(
+  fontSize: 18.0,
+  fontFamily: 'NewsCycle',
+  fontWeight: FontWeight.w700
+);
+
+TextStyle stateCardCases = TextStyle(
+  fontWeight: FontWeight.w600,
+  fontSize: 15.0
 );

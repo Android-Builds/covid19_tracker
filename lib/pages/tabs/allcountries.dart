@@ -1,5 +1,6 @@
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/countrydetails.dart';
+import 'package:covid19_tracker/pages/indiadetails.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class AllCountries extends StatefulWidget {
 }
 
 class _AllCountriesState extends State<AllCountries> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,12 +23,15 @@ class _AllCountriesState extends State<AllCountries> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) => 
-                CountryDetails(info: widget.info[index]))),
+              builder: (context) => widget.info[index].country != 'India' ?
+                CountryDetails(info: widget.info[index]) : 
+                  IndiaDetails(info: widget.info[index])
+              ),
+            ),
             child: Card(
               elevation: 10.0,
               child: Container(
-                height: 160.0,
+                height: 170.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                   child: Column(

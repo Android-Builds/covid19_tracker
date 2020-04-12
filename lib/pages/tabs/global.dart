@@ -1,4 +1,3 @@
-import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/globalstats.dart';
 import 'package:covid19_tracker/widgets/globalcount.dart';
@@ -6,11 +5,10 @@ import 'package:covid19_tracker/widgets/piechart.dart';
 import 'package:flutter/material.dart';
 
 class GlobalPage extends StatefulWidget {
-  GlobalPage({Key key, @required this.latest, 
-  @required this.indiastates, this.india}) : super(key: key);
+  GlobalPage({Key key, @required this.latest}) : super(key: key);
   final Latest latest;
-  final List<IndiaState> indiastates;
-  final Info india;
+  // final List<IndiaState> indiastates;
+  // final Info india;
   @override
   _GlobalPageState createState() => _GlobalPageState();
 }
@@ -20,9 +18,9 @@ class _GlobalPageState extends State<GlobalPage> {
   @override
   void initState(){
     super.initState();
-    if(widget.india.active != null) {
-      india = widget.india;
-    }
+    // if(widget.india.active != null) {
+    //   india = widget.india;
+    // }
   }
 
   Info india = new Info();

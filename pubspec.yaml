@@ -1,7 +1,7 @@
 name: covid19_tracker
 description: A new Flutter project.
 
-version: 1.0.0+1
+version: 1.1.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -46,10 +46,10 @@ flutter:
   fonts:
     - family: BenchNine
       fonts:
-        - asset: assets/fonts/BenchNine-Regular.ttf
+        - asset: assets/fonts/BenchNine-Bold.ttf
 
     - family: NewsCycle
       fonts:
-        - asset: fonts/NewsCycle-Regular.ttf
-        - asset: fonts/NewsCycle-Bold.ttf
+        - asset: assets/fonts/NewsCycle-Regular.ttf
+        - asset: assets/fonts/NewsCycle-Bold.ttf
           weight: 700

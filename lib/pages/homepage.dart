@@ -1,5 +1,7 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'package:covid19_tracker/models/datasearch.dart';
+import 'package:covid19_tracker/models/ind.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
@@ -13,19 +15,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title, this.latest, 
-  this.info, this.indiastates, this.savedlatest})
+  this.info, this.savedlatest})
   : super(key: key);
   final String title;
   final Latest latest;
   final Latest savedlatest;
   final List<Info> info;
-  final List<IndiaState> indiastates;
+  // final List<IndiaState> indiastates;
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
 
   configureFirebase() async {
     _firebaseMessaging.requestNotificationPermissions();
@@ -71,16 +72,16 @@ class _HomePageState extends State<HomePage> {
     widget.latest != null ? latestcount = widget.latest 
     : latestcount = widget.savedlatest;
     infolist = widget.info;
-    indianstates = widget.indiastates;
-    for(int i=0; i<infolist.length; i++) {
-      if(infolist[i].country == 'India') {
-        india = infolist[i];
-      }
-    }
+    // indianstates = widget.indiastates;
+    // for(int i=0; i<infolist.length; i++) {
+    //   if(infolist[i].country == 'India') {
+    //     india = infolist[i];
+    //   }
+    // }
   }
 
   List<Info> infolist = new List<Info>();
-  var india;
+  // var india;
   int i = 0;
   Latest latestcount = new Latest();
   List<IndiaState> indianstates = new List<IndiaState>();
@@ -100,11 +101,11 @@ class _HomePageState extends State<HomePage> {
     return getInfo().then((_info) {
       setState(() {
         infolist = _info;
-        for(int i=0; i<infolist.length; i++) {
-          if(infolist[i].country == 'India') {
-            india = infolist[i];
-          }
-        }
+        // for(int i=0; i<infolist.length; i++) {
+        //   if(infolist[i].country == 'India') {
+        //     india = infolist[i];
+        //   }
+        // }
       });
     });
   }
@@ -196,8 +197,7 @@ class _HomePageState extends State<HomePage> {
                     onRefresh: () => _refreshGlobal(),
                     child: SingleChildScrollView(
                       // physics: const AlwaysScrollableScrollPhysics(),
-                      child: GlobalPage(latest: latestcount, 
-                      indiastates: indianstates, india: india)
+                      child: GlobalPage(latest: latestcount)
                     ),
                   ),
                   RefreshIndicator(
