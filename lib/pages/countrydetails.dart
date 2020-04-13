@@ -1,5 +1,6 @@
 import 'package:covid19_tracker/models/info.dart';
-import 'package:covid19_tracker/pages/countrystats.dart';
+import 'package:covid19_tracker/widgets/contpiechart.dart';
+import 'package:covid19_tracker/widgets/countrystats.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -83,6 +84,8 @@ class _CountryDetailsState extends State<CountryDetails> {
                   ),
                 ),
               ),
+              SizedBox(height: 40.0),
+              CountryPieChart(info: widget.info),
               SizedBox(height: 40.0),
               CountryStats(country: widget.info.country,),
             ],

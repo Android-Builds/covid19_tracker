@@ -1,21 +1,18 @@
-import 'dart:async';
 import 'package:covid19_tracker/models/stats.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 
-class CountryStats extends StatefulWidget {
-  CountryStats({this.country});
-  final String country;
+class GlobalStats extends StatefulWidget {
   @override
-  _CountryStatsState createState() => _CountryStatsState();
+  _GlobalStatsState createState() => _GlobalStatsState();
 }
 
-class _CountryStatsState extends State<CountryStats> {
+class _GlobalStatsState extends State<GlobalStats> {
 
   @override
   void initState(){
-    getStats(widget.country).then((_stats) {
+    getGlobalStats().then((_stats) {
       /*var result = dates.map((e) => e.length == 7 ? DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}') : 
       DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}')).toList();*/
       setState(() {
@@ -23,7 +20,7 @@ class _CountryStatsState extends State<CountryStats> {
       List<int> cases = _stats.cases.values.toList().cast<int>();
       for(int i=0;i<dates.length; i++){
         casedata.add(
-          new CountryData(confirm: cases[i], 
+          new GlobalData(confirm: cases[i], 
           date: dates[i].length == 7 ? new DateTime(int.parse(dates[i].substring(5,7) + '20'), 
           int.parse(dates[i].substring(0,1)), 
           int.parse(dates[i].substring(2,4))) : 
@@ -36,7 +33,7 @@ class _CountryStatsState extends State<CountryStats> {
       cases = _stats.deaths.values.toList().cast<int>();
       for(int i=0;i<dates.length; i++){
         deathdata.add(
-          new CountryData(confirm: cases[i], 
+          new GlobalData(confirm: cases[i], 
           date: dates[i].length == 7 ? new DateTime(int.parse(dates[i].substring(5,7) + '20'), 
           int.parse(dates[i].substring(0,1)), 
           int.parse(dates[i].substring(2,4))) : 
@@ -49,7 +46,7 @@ class _CountryStatsState extends State<CountryStats> {
       cases = _stats.recovered.values.toList().cast<int>();
       for(int i=0;i<dates.length; i++){
         recovereddata.add(
-          new CountryData(confirm: cases[i], 
+          new GlobalData(confirm: cases[i], 
           date: dates[i].length == 7 ? new DateTime(int.parse(dates[i].substring(5,7) + '20'), 
           int.parse(dates[i].substring(0,1)), 
           int.parse(dates[i].substring(2,4))) : 
@@ -63,34 +60,34 @@ class _CountryStatsState extends State<CountryStats> {
     super.initState();
   }
 
-  CountryData data = new CountryData();
+  GlobalData data = new GlobalData();
   
-  List<CountryData> casedata = [];
-  List<CountryData> deathdata = [];
-  List<CountryData> recovereddata = [];
+  List<GlobalData> casedata = [];
+  List<GlobalData> deathdata = [];
+  List<GlobalData> recovereddata = [];
 
   _getSeriesData() {
-    List<charts.Series<CountryData, DateTime>> series = [
+    List<charts.Series<GlobalData, DateTime>> series = [
       charts.Series(
         id: "Confirmed Cases",
         data: casedata,
-        domainFn: (CountryData data, _) => data.date,
-        measureFn: (CountryData data, _) => data.confirm,
-        colorFn: (CountryData data, _) => charts.MaterialPalette.red.shadeDefault.lighter
+        domainFn: (GlobalData data, _) => data.date,
+        measureFn: (GlobalData data, _) => data.confirm,
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.red.shadeDefault.lighter
       ),
       charts.Series(
         id: "Deaths",
         data: deathdata,
-        domainFn: (CountryData data, _) => data.date,
-        measureFn: (CountryData data, _) => data.confirm,
-        colorFn: (CountryData data, _) => charts.MaterialPalette.blue.shadeDefault.lighter
+        domainFn: (GlobalData data, _) => data.date,
+        measureFn: (GlobalData data, _) => data.confirm,
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.blue.shadeDefault.lighter
       ),
       charts.Series(
         id: "Recovered",
         data: recovereddata,
-        domainFn: (CountryData data, _) => data.date,
-        measureFn: (CountryData data, _) => data.confirm,
-        colorFn: (CountryData data, _) => charts.MaterialPalette.green.shadeDefault.lighter
+        domainFn: (GlobalData data, _) => data.date,
+        measureFn: (GlobalData data, _) => data.confirm,
+        colorFn: (GlobalData data, _) => charts.MaterialPalette.green.shadeDefault.lighter
       )
     ];
     return series;
@@ -98,19 +95,18 @@ class _CountryStatsState extends State<CountryStats> {
 
   Widget myWidget() {
     return Container(
-      height: 600,
-      padding: EdgeInsets.all(10.0),
+      height: 600.0,
+      padding: EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
             Text(
-              'Timeline of Spread',
-              style: chartText,
+              'Timline of Spread',
+              textAlign: TextAlign.center,
+              style: chartText
             ),
-            SizedBox(
-              height: 20.0
-            ),
+            SizedBox(height: 20.0),
             Expanded(
               child: charts.TimeSeriesChart(
                 _getSeriesData(),
@@ -146,7 +142,7 @@ class _CountryStatsState extends State<CountryStats> {
                 Row(
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundColor: Colors.red,
+                      backgroundColor: Colors.red.shade200,
                       radius: 5.0,
                     ),
                     SizedBox(width: 10.0),
@@ -159,7 +155,7 @@ class _CountryStatsState extends State<CountryStats> {
                 Row(
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Colors.blue.shade200,
                       radius: 5.0,
                     ),
                     SizedBox(width: 10.0),
@@ -172,7 +168,7 @@ class _CountryStatsState extends State<CountryStats> {
                 Row(
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.green.shade200,
                       radius: 5.0,
                     ),
                     SizedBox(width: 10.0),
@@ -190,29 +186,42 @@ class _CountryStatsState extends State<CountryStats> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 2)),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done)
-          return myWidget();
-        else {
-          return Container(
-            height: 300,
-            child: Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).backgroundColor,
-              ),
-            ),
-          );
-        }
-      }
-    );
+    return myWidget();
+    // return SafeArea(
+    //   child: Scaffold(
+    //     appBar: AppBar(
+    //       title: Text(
+    //         'Global Stats',
+    //         style: TextStyle(
+    //           color: getColor(context)
+    //         ),
+    //       ),
+    //       iconTheme: getIconTheme(context),
+    //       centerTitle: true,
+    //       elevation: 0.0,
+    //       backgroundColor: Colors.transparent,
+    //     ),
+    //     body: FutureBuilder(
+    //       future: Future.delayed(Duration(seconds: 2)),
+    //       builder: (context, snapshot) {
+    //         if (snapshot.connectionState == ConnectionState.done) 
+    //           return myWidget();
+    //         else 
+    //         return Center(
+    //           child: CircularProgressIndicator(
+    //             backgroundColor: Theme.of(context).backgroundColor,
+    //           ),
+    //         );
+    //       }
+    //     )
+    //   ),
+    // );
   }
 }
 
-class CountryData {
+class GlobalData {
   DateTime date;
   int confirm;
 
-  CountryData({this.date, this.confirm});
+  GlobalData({this.date, this.confirm});
 }

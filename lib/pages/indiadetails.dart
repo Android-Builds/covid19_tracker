@@ -1,6 +1,6 @@
 import 'package:covid19_tracker/models/info.dart';
-import 'package:covid19_tracker/pages/countrystats.dart';
 import 'package:covid19_tracker/pages/statepage.dart';
+import 'package:covid19_tracker/widgets/countrystats.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 

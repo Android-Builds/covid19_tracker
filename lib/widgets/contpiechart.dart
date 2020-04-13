@@ -3,17 +3,17 @@ import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class PieChart extends StatelessWidget {
+class CountryPieChart extends StatelessWidget {
 
-  PieChart({this.latest});
+  CountryPieChart({this.info});
 
-  final Latest latest;
-  final red = charts.MaterialPalette.red.makeShades(3);
+  final Info info;
+  // final red = charts.MaterialPalette.red.makeShades(3);
 
   _getSeriesData() {
-    var active = double.parse((latest.active/latest.cases).toStringAsFixed(2))*100;  // double.parse((latest.active/latest.cases).toStringAsFixed(3))*100;
-    var deaths = double.parse((latest.deaths/latest.cases).toStringAsFixed(2))*100;
-    var recovered = double.parse((latest.recovered/latest.cases).toStringAsFixed(2))*100;
+    var active = double.parse((double.parse(info.active)/double.parse(info.cases)).toStringAsFixed(2))*100;  // double.parse((info.active/info.cases).toStringAsFixed(3))*100;
+    var deaths = double.parse((double.parse(info.deaths)/double.parse(info.cases)).toStringAsFixed(2))*100;
+    var recovered = double.parse((double.parse(info.recovered)/double.parse(info.cases)).toStringAsFixed(2))*100;
 
     var data = [
       GlobalData('Active', active),
@@ -32,7 +32,7 @@ class PieChart extends StatelessWidget {
             case 'Active' : return charts.MaterialPalette.blue.shadeDefault.lighter;
             case 'Deaths' : return charts.MaterialPalette.red.shadeDefault.lighter;
             case 'Recovered' : return charts.MaterialPalette.green.shadeDefault.lighter;
-            default : return red[0];
+            default : return charts.MaterialPalette.blue.shadeDefault;
           }
         },
       )

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 String latestapi = 'https://corona.lmao.ninja/all';
-String contapi = 'https://corona.lmao.ninja/countries';
+String contapi = 'https://corona.lmao.ninja/v2/countries';
 
 class Info {
   String cases;
@@ -14,12 +14,15 @@ class Info {
   String active;
   String critical;
   String flag;
+  String tests;
+  String testsPerOneMillion;
   String deathsPerOneMillion;
   String casesPerOneMillion;
 
   Info({this.cases, this.deaths, this.recovered, this.country, 
   this.todayCases, this.todayDeaths, this.active, this.critical,
-  this.flag, this.deathsPerOneMillion, this.casesPerOneMillion});
+  this.flag, this.deathsPerOneMillion, this.casesPerOneMillion,
+  this.tests, this.testsPerOneMillion});
 
   factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
@@ -32,6 +35,8 @@ class Info {
       active: json['active'].toString(),
       critical: json['critical'].toString(),
       flag: json['countryInfo']['flag'].toString(),
+      tests: json['tests'].toString(),
+      testsPerOneMillion: json['testsPerOneMillion'].toString(),
       deathsPerOneMillion: json['deathsPerOneMillion'].toString(),
       casesPerOneMillion: json['deathsPerOneMillion'].toString(),
     );
@@ -49,7 +54,7 @@ class Latest {
   int tests;
   int casesPerOneMillion;
   int deathsPerOneMillion;
-  double testsPerOneMillion;
+  var testsPerOneMillion;
   int affectedCountries;
 
   Latest({this.cases, this.deaths, 
@@ -74,7 +79,7 @@ class Latest {
       critical: json['critical'],
       tests: json['tests'],
       todayCases: json['todayCases'],
-      todayDeaths: json['todayCases'],
+      todayDeaths: json['todayDeaths'],
       casesPerOneMillion: json['casesPerOneMillion'],
       deathsPerOneMillion: json['deathsPerOneMillion'],
       testsPerOneMillion: json['testsPerOneMillion'],
