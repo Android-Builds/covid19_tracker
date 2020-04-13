@@ -22,6 +22,7 @@ dependencies:
   share:
   firebase_messaging:
   flutter_icons:
+  draggable_scrollbar:
 
 dev_dependencies:
   flutter_test:
