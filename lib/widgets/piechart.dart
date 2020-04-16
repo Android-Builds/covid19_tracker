@@ -11,9 +11,14 @@ class PieChart extends StatelessWidget {
   final red = charts.MaterialPalette.red.makeShades(3);
 
   _getSeriesData() {
-    var active = double.parse((latest.active/latest.cases).toStringAsFixed(2))*100;  // double.parse((latest.active/latest.cases).toStringAsFixed(3))*100;
-    var deaths = double.parse((latest.deaths/latest.cases).toStringAsFixed(2))*100;
-    var recovered = double.parse((latest.recovered/latest.cases).toStringAsFixed(2))*100;
+    var active = double.parse(((latest.active/latest.cases) * 100.roundToDouble()).toStringAsFixed(2)); 
+    //double.parse((latest.active/latest.cases).toStringAsFixed(2))*100;  
+    // double.parse((latest.active/latest.cases).toStringAsFixed(3))*100;
+    var deaths = double.parse(((latest.deaths/latest.cases) * 100.roundToDouble()).toStringAsFixed(2));
+    // (latest.deaths/latest.cases) * 100.roundToDouble(); 
+    //double.parse((latest.deaths/latest.cases).toStringAsFixed(2))*100;
+    var recovered = double.parse(((latest.recovered/latest.cases) * 100.roundToDouble()).toStringAsFixed(2));
+    // double.parse((latest.recovered/latest.cases).toStringAsFixed(2))*100;
 
     var data = [
       GlobalData('Active', active),

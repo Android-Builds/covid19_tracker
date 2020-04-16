@@ -11,9 +11,13 @@ class CountryPieChart extends StatelessWidget {
   // final red = charts.MaterialPalette.red.makeShades(3);
 
   _getSeriesData() {
-    var active = double.parse((double.parse(info.active)/double.parse(info.cases)).toStringAsFixed(2))*100;  // double.parse((info.active/info.cases).toStringAsFixed(3))*100;
-    var deaths = double.parse((double.parse(info.deaths)/double.parse(info.cases)).toStringAsFixed(2))*100;
-    var recovered = double.parse((double.parse(info.recovered)/double.parse(info.cases)).toStringAsFixed(2))*100;
+    var active = double.parse(((double.parse(info.active)/double.parse(info.cases)) * 100.roundToDouble()).toStringAsFixed(2));
+    // double.parse((double.parse(info.active)/double.parse(info.cases)).toStringAsFixed(2))*100;  
+    // double.parse((info.active/info.cases).toStringAsFixed(3))*100;
+    var deaths = double.parse(((double.parse(info.deaths)/double.parse(info.cases)) * 100.roundToDouble()).toStringAsFixed(2));
+    // double.parse((double.parse(info.deaths)/double.parse(info.cases)).toStringAsFixed(2))*100;
+    var recovered = double.parse(((double.parse(info.recovered)/double.parse(info.cases)) * 100.roundToDouble()).toStringAsFixed(2));
+    // double.parse((double.parse(info.recovered)/double.parse(info.cases)).toStringAsFixed(2))*100;
 
     var data = [
       GlobalData('Active', active),
@@ -59,9 +63,7 @@ class CountryPieChart extends StatelessWidget {
                   fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              SizedBox(height: 40),
               Expanded(
                 child: charts.PieChart(
                   _getSeriesData(),

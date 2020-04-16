@@ -1,3 +1,4 @@
+import 'package:covid19_tracker/models/ind.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/pages/countrydetails.dart';
 import 'package:covid19_tracker/pages/indiadetails.dart';
@@ -6,8 +7,9 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 
 class AllCountries extends StatefulWidget {
-  AllCountries({this.info});
+  AllCountries({this.info, this.states});
   final List<Info> info;
+  final List<StateData> states;
   @override
   _AllCountriesState createState() => _AllCountriesState();
 }

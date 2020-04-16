@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                     color: getColor(context),
                     onPressed: () {
                       showSearch(context: context, 
-                      delegate: DataSearch(list: infolist));
+                      delegate: DataSearch(info: infolist));
                     },
                     icon: Icon(Icons.search),
                     splashColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:covid19_tracker/models/info.dart';
 import 'package:covid19_tracker/widgets/contpiechart.dart';
+import 'package:covid19_tracker/widgets/countrycasecards.dart';
 import 'package:covid19_tracker/widgets/countrystats.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,11 @@ class _CountryDetailsState extends State<CountryDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              CountryCaseCards(text1: 'Cases', text2: 'Total', text3: 'Today', text4: 'Per Mil.', 
-                case1: widget.info.cases, case2: widget.info.todayCases, case3: widget.info.casesPerOneMillion,),
-              CountryCaseCards(text1: 'Deaths', text2: 'Total', text3: 'Today', text4: 'Per Mil.', 
-                case1: widget.info.deaths, case2: widget.info.todayDeaths, case3: widget.info.deathsPerOneMillion,),
+              CountryCaseCards(text: 'Cases', case1: widget.info.cases, 
+                case2: widget.info.todayCases, case3: widget.info.casesPerOneMillion),
+              CountryCaseCards(text: 'Deaths', case1: widget.info.deaths, 
+                case2: widget.info.todayDeaths, case3: widget.info.deathsPerOneMillion),
+              CountryCaseCards(text: 'Tests', case1: widget.info.tests, case3: widget.info.testsPerOneMillion),
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 elevation: 10.0,
@@ -84,78 +86,10 @@ class _CountryDetailsState extends State<CountryDetails> {
                   ),
                 ),
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 10.0),
               CountryPieChart(info: widget.info),
-              SizedBox(height: 40.0),
+              SizedBox(height: 20.0),
               CountryStats(country: widget.info.country,),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CountryCaseCards extends StatelessWidget {
-  const CountryCaseCards({
-    Key key,
-    @required this.text1, this.text2, this.text3, 
-    this.case1, this.case2, this.text4, this.case3,
-  }) : super(key: key);
-
-  final String text1, text2, text3, text4, case1, case2, case3;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      elevation: 10.0,
-      child: Container(
-        height: 85.0,
-        width: MediaQuery.of(context).size.width,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                text1,
-                style: detailCaseStyles,
-              ),
-              SizedBox(width: 10.0),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    text2,
-                    style: caseStyles,
-                  ),
-                  SizedBox(height: 20.0),
-                  Text(case1)
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    text3,
-                    style: caseStyles,
-                  ),
-                  SizedBox(height: 20.0),
-                  Text(case2)
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    text4,
-                    style: caseStyles,
-                  ),
-                  SizedBox(height: 20.0),
-                  Text(case3)
-                ],
-              )
             ],
           ),
         ),

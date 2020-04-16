@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -32,9 +31,9 @@ class StateData {
   }
 }
 
-HashMap<int, StateData> states = new HashMap();
+List<StateData> states = new List<StateData>();
 
-Future<HashMap<int, StateData>> getStateData() async {
+Future<List<StateData>> getStateData() async {
   final response = await http.get(api);
 
   if (response.statusCode == 200) {
@@ -44,7 +43,7 @@ Future<HashMap<int, StateData>> getStateData() async {
       for(int i=0; i<responseJson.length; i++){
         if(responseJson[i] != null){
           Map<String,dynamic> map = responseJson[i];
-          states[i] = StateData.fromJson(map);
+          states.add(StateData.fromJson(map));
         }
       }
     }

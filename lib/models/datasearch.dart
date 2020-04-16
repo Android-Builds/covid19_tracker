@@ -1,5 +1,5 @@
-
 import 'package:covid19_tracker/models/info.dart';
+import 'package:covid19_tracker/pages/statepage.dart';
 import 'package:covid19_tracker/pages/tabs/allcountries.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +7,10 @@ var suggestionlist;
 
 class DataSearch extends SearchDelegate {
 
-  DataSearch({this.list});
+  DataSearch({this.info, this.states});
 
-  List<Info> list;
+  List<Info> info;
+  List states;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -49,16 +50,23 @@ class DataSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     //Implement buildResults
-    return AllCountries(info: suggestionlist);
+    return info != null ? AllCountries(info: suggestionlist) 
+      : StateBuilder(states: suggestionlist);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     //search suggestions
-    suggestionlist = query.isEmpty ? list 
-    : list.where((element) => element.country.startsWith(query.substring(0,1)
+    info != null ?
+    suggestionlist = query.isEmpty ? info 
+    : info.where((element) => element.country.startsWith(query.substring(0,1)
+    .toUpperCase() + query.substring(1,query.length))).toList()
+    :suggestionlist = query.isEmpty ? states 
+    : states.where((element) => element.state.startsWith(query.substring(0,1)
     .toUpperCase() + query.substring(1,query.length))).toList();
-    return AllCountries(info: suggestionlist);
+    
+    return info != null ? AllCountries(info: suggestionlist) 
+      : StateBuilder(states: suggestionlist);
   }
   
 }
