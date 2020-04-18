@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
   final Latest latest;
   final Latest savedlatest;
   final List<Info> info;
-  // final List<IndiaState> indiastates;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -72,12 +71,6 @@ class _HomePageState extends State<HomePage> {
     widget.latest != null ? latestcount = widget.latest 
     : latestcount = widget.savedlatest;
     infolist = widget.info;
-    // indianstates = widget.indiastates;
-    // for(int i=0; i<infolist.length; i++) {
-    //   if(infolist[i].country == 'India') {
-    //     india = infolist[i];
-    //   }
-    // }
   }
 
   List<Info> infolist = new List<Info>();
@@ -101,11 +94,6 @@ class _HomePageState extends State<HomePage> {
     return getInfo().then((_info) {
       setState(() {
         infolist = _info;
-        // for(int i=0; i<infolist.length; i++) {
-        //   if(infolist[i].country == 'India') {
-        //     india = infolist[i];
-        //   }
-        // }
       });
     });
   }
@@ -196,7 +184,6 @@ class _HomePageState extends State<HomePage> {
                     key: new GlobalKey<RefreshIndicatorState>(),
                     onRefresh: () => _refreshGlobal(),
                     child: SingleChildScrollView(
-                      // physics: const AlwaysScrollableScrollPhysics(),
                       child: GlobalPage(latest: latestcount)
                     ),
                   ),

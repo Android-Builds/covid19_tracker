@@ -12,18 +12,16 @@ class StatePage extends StatefulWidget {
 
 class _StatePageState extends State<StatePage> {
 
-  List<StateData> states = new List<StateData>();
+  List<StateData> states;
 
   @override
   void initState() {
     super.initState();
-    if(states != null){   
-      getStateData().then((value){
-        setState(() {
-          states = value;
-        });
+    getStateData().then((value){
+      setState(() {
+        states = value;
       });
-    }
+    });
   }
 
   @override
