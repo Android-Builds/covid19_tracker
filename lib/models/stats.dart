@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String api = 'https://corona.lmao.ninja/v2/historical/';
-String globalapi = 'https://corona.lmao.ninja/v2/historical/all';
+String api = 'https://disease.sh/v3/covid-19/historical/';
+String prefix = '?lastdays=360';
+String globalapi = 'https://disease.sh/v3/covid-19/historical/all?lastdays=360';
 
 class Stats {
   Map cases;
@@ -13,15 +14,14 @@ class Stats {
 
   factory Stats.fromJson(Map<String, dynamic> json) {
     return Stats(
-      cases: json['cases'],
-      deaths: json['deaths'],
-      recovered: json['recovered']
-    );
+        cases: json['cases'],
+        deaths: json['deaths'],
+        recovered: json['recovered']);
   }
 }
 
 Future<Stats> getStats(String country) async {
-  final response = await http.get(api+country);
+  final response = await http.get(api + country + prefix);
   final responseJson = json.decode(response.body);
   return Stats.fromJson(responseJson['timeline']);
 }
