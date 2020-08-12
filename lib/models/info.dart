@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-String latestapi = 'https://corona.lmao.ninja/all';
-String contapi = 'https://corona.lmao.ninja/v2/countries';
+String latestapi = 'https://disease.sh/v3/covid-19/all';
+String contapi = 'https://disease.sh/v3/covid-19/countries';
 
 class Info {
   String cases;
@@ -19,10 +19,20 @@ class Info {
   String deathsPerOneMillion;
   String casesPerOneMillion;
 
-  Info({this.cases, this.deaths, this.recovered, this.country, 
-  this.todayCases, this.todayDeaths, this.active, this.critical,
-  this.flag, this.deathsPerOneMillion, this.casesPerOneMillion,
-  this.tests, this.testsPerOneMillion});
+  Info(
+      {this.cases,
+      this.deaths,
+      this.recovered,
+      this.country,
+      this.todayCases,
+      this.todayDeaths,
+      this.active,
+      this.critical,
+      this.flag,
+      this.deathsPerOneMillion,
+      this.casesPerOneMillion,
+      this.tests,
+      this.testsPerOneMillion});
 
   factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
@@ -44,47 +54,54 @@ class Info {
 }
 
 class Latest {
-  int cases;
-  int deaths;
-  int active;
-  int recovered;
-  int critical;
-  int todayDeaths;
-  int todayCases;
-  int tests;
-  int casesPerOneMillion;
-  int deathsPerOneMillion;
+  var cases;
+  var deaths;
+  var active;
+  var recovered;
+  var critical;
+  var todayDeaths;
+  var todayCases;
+  var tests;
+  var casesPerOneMillion;
+  var deathsPerOneMillion;
   var testsPerOneMillion;
-  int affectedCountries;
+  var affectedCountries;
 
-  Latest({this.cases, this.deaths, 
-  this.active, this.recovered, this.affectedCountries,
-  this.casesPerOneMillion, this.critical, this.deathsPerOneMillion,
-  this.tests, this.testsPerOneMillion, this.todayCases,
-  this.todayDeaths});
+  Latest(
+      {this.cases,
+      this.deaths,
+      this.active,
+      this.recovered,
+      this.affectedCountries,
+      this.casesPerOneMillion,
+      this.critical,
+      this.deathsPerOneMillion,
+      this.tests,
+      this.testsPerOneMillion,
+      this.todayCases,
+      this.todayDeaths});
 
   Map<String, dynamic> toJson() => {
-      'cases': cases,
-      'deaths': deaths,
-      'active' : active,
-      'recovered': recovered,
-    };
+        'cases': cases,
+        'deaths': deaths,
+        'active': active,
+        'recovered': recovered,
+      };
 
   factory Latest.fromJson(Map<String, dynamic> json) {
     return Latest(
-      cases: json['cases'],
-      deaths: json['deaths'],
-      recovered: json['recovered'],
-      active: json['active'],
-      critical: json['critical'],
-      tests: json['tests'],
-      todayCases: json['todayCases'],
-      todayDeaths: json['todayDeaths'],
-      casesPerOneMillion: json['casesPerOneMillion'],
-      deathsPerOneMillion: json['deathsPerOneMillion'],
-      testsPerOneMillion: json['testsPerOneMillion'],
-      affectedCountries: json['affectedCountries']
-    );
+        cases: json['cases'],
+        deaths: json['deaths'],
+        recovered: json['recovered'],
+        active: json['active'],
+        critical: json['critical'],
+        tests: json['tests'],
+        todayCases: json['todayCases'],
+        todayDeaths: json['todayDeaths'],
+        casesPerOneMillion: json['casesPerOneMillion'],
+        deathsPerOneMillion: json['deathsPerOneMillion'],
+        testsPerOneMillion: json['testsPerOneMillion'],
+        affectedCountries: json['affectedCountries']);
   }
 }
 
@@ -102,10 +119,10 @@ Future<List<Info>> getInfo() async {
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);
-    if(responseJson.length>0){
-      for(int i=0; i<responseJson.length; i++){
-        if(responseJson[i] != null){
-          Map<String,dynamic> map = responseJson[i];
+    if (responseJson.length > 0) {
+      for (int i = 0; i < responseJson.length; i++) {
+        if (responseJson[i] != null) {
+          Map<String, dynamic> map = responseJson[i];
           info.add(Info.fromJson(map));
         }
       }

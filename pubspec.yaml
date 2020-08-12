@@ -18,7 +18,7 @@ dependencies:
   url_launcher:
   flutter_email_sender:
   flutter_launcher_icons:
-  shared_preferences:
+  shared_preferences: ^0.5.8
   share:
   firebase_messaging:
   flutter_icons:
