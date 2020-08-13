@@ -9,12 +9,23 @@ class GlobalStats extends StatefulWidget {
 }
 
 class _GlobalStatsState extends State<GlobalStats> {
+  bool disposed = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+    disposed = true;
+  }
+
   @override
   void initState() {
-    getGlobalStats().then((_stats) {
-      /*var result = dates.map((e) => e.length == 7 ? DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}') : 
+    super.initState();
+    disposed = false;
+    WidgetsFlutterBinding.ensureInitialized();
+    getGlobalStats().then(
+      (_stats) {
+        /*var result = dates.map((e) => e.length == 7 ? DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}') : 
       DateTime.parse('${e.substring(0,1)}-${e.substring(2,3)}-${e.substring(5,6)}')).toList();*/
-      setState(() {
         List<String> dates = _stats.cases.keys.toList().cast<String>();
         List<int> cases = _stats.cases.values.toList().cast<int>();
         for (int i = 0; i < dates.length; i++) {
@@ -60,9 +71,11 @@ class _GlobalStatsState extends State<GlobalStats> {
                       int.parse(dates[i].substring(0, 1)),
                       int.parse(dates[i].substring(2, 3)))));
         }
-      });
-    });
-    super.initState();
+        if (!disposed) {
+          setState(() {});
+        }
+      },
+    );
   }
 
   GlobalData data = new GlobalData();
@@ -81,19 +94,21 @@ class _GlobalStatsState extends State<GlobalStats> {
           colorFn: (GlobalData data, _) =>
               charts.MaterialPalette.red.shadeDefault.lighter),
       charts.Series(
-          id: "Deaths",
-          data: deathdata,
-          domainFn: (GlobalData data, _) => data.date,
-          measureFn: (GlobalData data, _) => data.confirm,
-          colorFn: (GlobalData data, _) =>
-              charts.MaterialPalette.blue.shadeDefault.lighter),
+        id: "Deaths",
+        data: deathdata,
+        domainFn: (GlobalData data, _) => data.date,
+        measureFn: (GlobalData data, _) => data.confirm,
+        colorFn: (GlobalData data, _) =>
+            charts.MaterialPalette.blue.shadeDefault.lighter,
+      ),
       charts.Series(
-          id: "Recovered",
-          data: recovereddata,
-          domainFn: (GlobalData data, _) => data.date,
-          measureFn: (GlobalData data, _) => data.confirm,
-          colorFn: (GlobalData data, _) =>
-              charts.MaterialPalette.green.shadeDefault.lighter)
+        id: "Recovered",
+        data: recovereddata,
+        domainFn: (GlobalData data, _) => data.date,
+        measureFn: (GlobalData data, _) => data.confirm,
+        colorFn: (GlobalData data, _) =>
+            charts.MaterialPalette.green.shadeDefault.lighter,
+      )
     ];
     return series;
   }
@@ -124,17 +139,18 @@ class _GlobalStatsState extends State<GlobalStats> {
                   ),
                 )),
                 primaryMeasureAxis: charts.NumericAxisSpec(
-                    renderSpec: charts.GridlineRendererSpec(
-                  labelStyle: charts.TextStyleSpec(
-                    color: MediaQuery.of(context).platformBrightness ==
-                            Brightness.dark
-                        ? charts.MaterialPalette.white
-                        : charts.MaterialPalette.black,
+                  renderSpec: charts.GridlineRendererSpec(
+                    labelStyle: charts.TextStyleSpec(
+                      color: MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark
+                          ? charts.MaterialPalette.white
+                          : charts.MaterialPalette.black,
+                    ),
+                    lineStyle: charts.LineStyleSpec(
+                      color: charts.MaterialPalette.transparent,
+                    ),
                   ),
-                  lineStyle: charts.LineStyleSpec(
-                    color: charts.MaterialPalette.transparent,
-                  ),
-                )),
+                ),
               ),
             ),
             SizedBox(height: 50.0),
