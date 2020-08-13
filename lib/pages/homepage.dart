@@ -152,19 +152,6 @@ class _HomePageState extends State<HomePage> {
               centerTitle: true,
               elevation: 0.0,
               backgroundColor: Colors.transparent,
-              // bottom: TabBar(
-              //   indicatorWeight: 2,
-              //   labelColor: getColor(context),
-              //   isScrollable: true,
-              //   tabs: <Widget>[
-              //     Tab(
-              //       text: 'Global',
-              //     ),
-              //     Tab(
-              //       text: 'Countries',
-              //     )
-              //   ],
-              // ),
               actions: <Widget>[
                 IconButton(
                   color: getColor(context),
@@ -184,8 +171,8 @@ class _HomePageState extends State<HomePage> {
                   title: Text('Home'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  title: Text('Favourites'),
+                  icon: Icon(Icons.format_list_bulleted),
+                  title: Text('Countries'),
                 ),
               ],
               currentIndex: _selectedIndex,
@@ -206,21 +193,6 @@ class _HomePageState extends State<HomePage> {
                 child: AllCountries(info: infolist),
               ),
             ].elementAt(_selectedIndex),
-            // body: TabBarView(
-            //   children: <Widget>[
-            //     RefreshIndicator(
-            //       key: new GlobalKey<RefreshIndicatorState>(),
-            //       onRefresh: () => _refreshGlobal(),
-            //       child: SingleChildScrollView(
-            //           child: GlobalPage(latest: latestcount)),
-            //     ),
-            //     RefreshIndicator(
-            //       key: new GlobalKey<RefreshIndicatorState>(),
-            //       onRefresh: () => _refreshAll(),
-            //       child: AllCountries(info: infolist),
-            //     ),
-            //   ],
-            // ),
           ),
         ),
       ),

@@ -201,35 +201,6 @@ class _GlobalStatsState extends State<GlobalStats> {
   @override
   Widget build(BuildContext context) {
     return myWidget();
-    // return SafeArea(
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: Text(
-    //         'Global Stats',
-    //         style: TextStyle(
-    //           color: getColor(context)
-    //         ),
-    //       ),
-    //       iconTheme: getIconTheme(context),
-    //       centerTitle: true,
-    //       elevation: 0.0,
-    //       backgroundColor: Colors.transparent,
-    //     ),
-    //     body: FutureBuilder(
-    //       future: Future.delayed(Duration(seconds: 2)),
-    //       builder: (context, snapshot) {
-    //         if (snapshot.connectionState == ConnectionState.done)
-    //           return myWidget();
-    //         else
-    //         return Center(
-    //           child: CircularProgressIndicator(
-    //             backgroundColor: Theme.of(context).backgroundColor,
-    //           ),
-    //         );
-    //       }
-    //     )
-    //   ),
-    // );
   }
 }
 
