@@ -141,29 +141,6 @@ class _HomePageState extends State<HomePage> {
         home: SafeArea(
           child: Scaffold(
             key: _scaffoldKey,
-            appBar: AppBar(
-              iconTheme: getIconTheme(context),
-              title: Text(
-                widget.title,
-                style: TextStyle(
-                  color: getColor(context),
-                ),
-              ),
-              centerTitle: true,
-              elevation: 0.0,
-              backgroundColor: Colors.transparent,
-              actions: <Widget>[
-                IconButton(
-                  color: getColor(context),
-                  onPressed: () {
-                    showSearch(
-                        context: context, delegate: DataSearch(info: infolist));
-                  },
-                  icon: Icon(Icons.search),
-                  splashColor: Colors.transparent,
-                )
-              ],
-            ),
             bottomNavigationBar: BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
@@ -179,18 +156,20 @@ class _HomePageState extends State<HomePage> {
               onTap: _onItemTapped,
               selectedItemColor: Colors.amber[800],
             ),
-            drawer: AppDrawer(),
             body: [
               RefreshIndicator(
                 key: new GlobalKey<RefreshIndicatorState>(),
                 onRefresh: () => _refreshGlobal(),
-                child: SingleChildScrollView(
-                    child: GlobalPage(latest: latestcount)),
+                child: GlobalPage(
+                  latest: latestcount,
+                ),
               ),
               RefreshIndicator(
                 key: new GlobalKey<RefreshIndicatorState>(),
                 onRefresh: () => _refreshAll(),
-                child: AllCountries(info: infolist),
+                child: AllCountries(
+                  info: infolist,
+                ),
               ),
             ].elementAt(_selectedIndex),
           ),
