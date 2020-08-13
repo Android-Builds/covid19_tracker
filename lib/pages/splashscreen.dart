@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
-import 'package:covid19_tracker/models/ind.dart';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +8,11 @@ import 'package:covid19_tracker/models/info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-   @override
-   _SplashScreenState createState() => _SplashScreenState();
- }
- 
- class _SplashScreenState extends State<SplashScreen> {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
 
+class _SplashScreenState extends State<SplashScreen> {
   List<Info> info = new List<Info>();
   Latest latest = new Latest();
   Latest savedlatest = new Latest();
@@ -35,7 +32,7 @@ class SplashScreen extends StatefulWidget {
     }
   }
 
-  getcountry(){
+  getcountry() {
     getInfo().then((_info) {
       setState(() {
         info = _info;
@@ -44,7 +41,7 @@ class SplashScreen extends StatefulWidget {
   }
 
   getlatest() {
-    latest.cases = latest.deaths =  latest.recovered = 0;
+    latest.cases = latest.deaths = latest.recovered = 0;
     getLatest().then((_latest) {
       setState(() {
         latest = _latest;
@@ -58,63 +55,69 @@ class SplashScreen extends StatefulWidget {
     });
   }
 
-   @override
-   void initState(){
+  @override
+  void initState() {
     super.initState();
     getstates();
     getlatest();
     getcountry();
+    getDailyData().then((value) {
+      print(value[10].confirmed[10].dailycount);
+    });
     loadSharedPrefs();
     Timer(Duration(seconds: 5), () {
       Route route = MaterialPageRoute(
-        builder: (context) => HomePage(title: 'Covid-19 Tracker', 
-        latest: latest, info: info, savedlatest: savedlatest));
+          builder: (context) => HomePage(
+              title: 'Covid-19 Tracker',
+              latest: latest,
+              info: info,
+              savedlatest: savedlatest));
       Navigator.pushReplacement(context, route);
     });
   }
-   
-   @override
-   Widget build(BuildContext context) {
-     return SafeArea(
-       child: Scaffold(
-         body: Stack(
-           fit: StackFit.expand,
-           children: <Widget>[
-             Container(
-               decoration: BoxDecoration(
-                 color: MediaQuery.of(context).platformBrightness == 
-                 Brightness.dark ? Colors.grey[900] : Colors.white,
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color:
+                    MediaQuery.of(context).platformBrightness == Brightness.dark
+                        ? Colors.grey[900]
+                        : Colors.white,
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('assets/corona.png'),
+                SizedBox(
+                  height: 20.0,
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/corona.png'
+                Text(
+                  'Covid-19 Tracker',
+                  style: TextStyle(
+                    color: getColor(context),
+                    fontSize: 15.0,
+                    // fontFamily: 'ShadowsIntoLight',
+                    // letterSpacing: 3.0
                   ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text(
-                    'Covid-19 Tracker',
-                    style: TextStyle(
-                      color:getColor(context),
-                      fontSize: 15.0,
-                      // fontFamily: 'ShadowsIntoLight',
-                      // letterSpacing: 3.0
-                    ),
-                  ),
-                  SizedBox(
-                    height: 100.0,
-                  ),
-                  CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                  )
-                ],
-              ),
-            ],
-         ),
-       ),
-     );
-   }
- }
+                ),
+                SizedBox(
+                  height: 100.0,
+                ),
+                CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
