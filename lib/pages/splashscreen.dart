@@ -23,34 +23,33 @@ class _SplashScreenState extends State<SplashScreen> {
     return json.decode(prefs.getString(key));
   }
 
-  loadSharedPrefs() async {
+  Future loadSharedPrefs() async {
     try {
-      var l = Latest.fromJson(await read('latest'));
-      savedlatest = l;
+      savedlatest = Latest.fromJson(await read('latest'));
     } catch (Excepetion) {
       print('Failed to load saved');
     }
   }
 
-  getcountry() {
-    getInfo().then((_info) {
+  Future getcountry() {
+    return getInfo().then((_info) {
       setState(() {
         info = _info;
       });
     });
   }
 
-  getlatest() {
+  Future getlatest() {
     latest.cases = latest.deaths = latest.recovered = 0;
-    getLatest().then((_latest) {
+    return getLatest().then((_latest) {
       setState(() {
         latest = _latest;
       });
     });
   }
 
-  getstates() {
-    getIndia().then((value) {
+  Future getstates() {
+    return getIndia().then((value) {
       indiaState = value;
     });
   }
@@ -58,14 +57,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    getstates();
-    getlatest();
-    getcountry();
-    getDailyData().then((value) {
-      print(value[10].confirmed[10].dailycount);
-    });
-    loadSharedPrefs();
-    Timer(Duration(seconds: 5), () {
+    Future.wait([
+      loadSharedPrefs(),
+      getstates(),
+      getlatest(),
+      getcountry(),
+      getDailyData(),
+    ]).then((value) {
       Route route = MaterialPageRoute(
           builder: (context) => HomePage(
               title: 'Covid-19 Tracker',
@@ -91,29 +89,25 @@ class _SplashScreenState extends State<SplashScreen> {
                         : Colors.white,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/corona.png'),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  'Covid-19 Tracker',
-                  style: TextStyle(
-                    color: getColor(context),
-                    fontSize: 15.0,
-                    // fontFamily: 'ShadowsIntoLight',
-                    // letterSpacing: 3.0
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/corona.png'),
+                  SizedBox(
+                    height: 50.0,
                   ),
-                ),
-                SizedBox(
-                  height: 100.0,
-                ),
-                CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                )
-              ],
+                  Text(
+                    'Covid-19 Tracker',
+                    style: TextStyle(
+                      color: getColor(context),
+                      fontSize: 15.0,
+                      // fontFamily: 'ShadowsIntoLight',
+                      // letterSpacing: 3.0
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
