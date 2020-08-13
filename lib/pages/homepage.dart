@@ -14,9 +14,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.latest, 
-  this.info, this.savedlatest})
-  : super(key: key);
+  HomePage({Key key, this.title, this.latest, this.info, this.savedlatest})
+      : super(key: key);
   final String title;
   final Latest latest;
   final Latest savedlatest;
@@ -26,12 +25,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   configureFirebase() async {
     _firebaseMessaging.requestNotificationPermissions();
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        if(!_isDoubleMessage) {
+        if (!_isDoubleMessage) {
           print("onMessage: $message");
           showDialog(
             context: context,
@@ -68,8 +66,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     configureFirebase();
-    widget.latest != null ? latestcount = widget.latest 
-    : latestcount = widget.savedlatest;
+    widget.latest != null
+        ? latestcount = widget.latest
+        : latestcount = widget.savedlatest;
     infolist = widget.info;
   }
 
@@ -81,6 +80,14 @@ class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   static bool _isDoubleMessage = false;
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   Future<Null> _refreshGlobal() {
     return getLatest().then((_latest) {
@@ -105,13 +112,10 @@ class _HomePageState extends State<HomePage> {
 
   Future<bool> _onWillPop() async {
     i++;
-    if(i<2) {
+    if (i < 2) {
       saveValues(latestcount);
-      _scaffoldKey.currentState.showSnackBar(
-       new SnackBar(
-          content: new Text('Press again to exit')
-        )
-      );
+      _scaffoldKey.currentState
+          .showSnackBar(new SnackBar(content: new Text('Press again to exit')));
     } else {
       return true;
     }
@@ -133,68 +137,90 @@ class _HomePageState extends State<HomePage> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        darkTheme: ThemeData.dark().copyWith(
-          backgroundColor: Colors.black
-        ),
+        darkTheme: ThemeData.dark().copyWith(backgroundColor: Colors.black),
         home: SafeArea(
-          child: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              key: _scaffoldKey,
-              appBar: AppBar(
-                iconTheme: getIconTheme(context),
-                title: Text(
-                  widget.title,
-                  style: TextStyle(
-                    color: getColor(context),
-                  ),
+          child: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              iconTheme: getIconTheme(context),
+              title: Text(
+                widget.title,
+                style: TextStyle(
+                  color: getColor(context),
                 ),
-                centerTitle: true,
-                elevation: 0.0,
-                backgroundColor: Colors.transparent,
-                bottom: TabBar(
-                  indicatorWeight: 2,
-                  labelColor: getColor(context),
-                  isScrollable: true,
-                  tabs: <Widget>[
-                    Tab(
-                      text: 'Global',
-                    ),
-                    Tab(
-                      text: 'Countries',
-                    )
-                  ]
-                ),
-                actions: <Widget>[
-                  IconButton(
-                    color: getColor(context),
-                    onPressed: () {
-                      showSearch(context: context, 
-                      delegate: DataSearch(info: infolist));
-                    },
-                    icon: Icon(Icons.search),
-                    splashColor: Colors.transparent,
-                  )
-                ],
               ),
-              drawer: AppDrawer(),
-              body: TabBarView(
-                children: <Widget>[
-                  RefreshIndicator(
-                    key: new GlobalKey<RefreshIndicatorState>(),
-                    onRefresh: () => _refreshGlobal(),
-                    child: SingleChildScrollView(
-                      child: GlobalPage(latest: latestcount)
-                    ),
-                  ),
-                  RefreshIndicator(
-                    key:new GlobalKey<RefreshIndicatorState>(),
-                    onRefresh: () => _refreshAll(),
-                    child: AllCountries(info: infolist),
-                  ),
-                ],
-              )
+              centerTitle: true,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              // bottom: TabBar(
+              //   indicatorWeight: 2,
+              //   labelColor: getColor(context),
+              //   isScrollable: true,
+              //   tabs: <Widget>[
+              //     Tab(
+              //       text: 'Global',
+              //     ),
+              //     Tab(
+              //       text: 'Countries',
+              //     )
+              //   ],
+              // ),
+              actions: <Widget>[
+                IconButton(
+                  color: getColor(context),
+                  onPressed: () {
+                    showSearch(
+                        context: context, delegate: DataSearch(info: infolist));
+                  },
+                  icon: Icon(Icons.search),
+                  splashColor: Colors.transparent,
+                )
+              ],
             ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text('Home'),
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite),
+                  title: Text('Favourites'),
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+              selectedItemColor: Colors.amber[800],
+            ),
+            drawer: AppDrawer(),
+            body: [
+              RefreshIndicator(
+                key: new GlobalKey<RefreshIndicatorState>(),
+                onRefresh: () => _refreshGlobal(),
+                child: SingleChildScrollView(
+                    child: GlobalPage(latest: latestcount)),
+              ),
+              RefreshIndicator(
+                key: new GlobalKey<RefreshIndicatorState>(),
+                onRefresh: () => _refreshAll(),
+                child: AllCountries(info: infolist),
+              ),
+            ].elementAt(_selectedIndex),
+            // body: TabBarView(
+            //   children: <Widget>[
+            //     RefreshIndicator(
+            //       key: new GlobalKey<RefreshIndicatorState>(),
+            //       onRefresh: () => _refreshGlobal(),
+            //       child: SingleChildScrollView(
+            //           child: GlobalPage(latest: latestcount)),
+            //     ),
+            //     RefreshIndicator(
+            //       key: new GlobalKey<RefreshIndicatorState>(),
+            //       onRefresh: () => _refreshAll(),
+            //       child: AllCountries(info: infolist),
+            //     ),
+            //   ],
+            // ),
           ),
         ),
       ),
