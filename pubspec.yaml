@@ -11,18 +11,33 @@ dependencies:
     sdk: flutter
   cupertino_icons:
   http:
-  charts_flutter:
+  charts_flutter: 
   flutter_svg:
   built_path: 
   built_path_annotations:
   url_launcher:
   flutter_email_sender:
   flutter_launcher_icons:
-  shared_preferences: ^0.5.8
+  shared_preferences:
   share:
   firebase_messaging:
   flutter_icons:
-  draggable_scrollbar:
+  simple_map: ^0.1.0
+
+  #widgets
+  sliding_up_panel:
+  carousel_slider:
+
+  #docarative
+  google_fonts:
+
+  #graphs
+  syncfusion_flutter_charts: ^19.1.58
+  syncfusion_flutter_maps:
+
+  #bloc
+  flutter_bloc:
+  equatable:
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,6 @@
 import 'package:covid19_tracker/models/datasearch.dart';
 import 'package:covid19_tracker/models/ind.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 
 class StatePage extends StatefulWidget {
@@ -11,13 +10,12 @@ class StatePage extends StatefulWidget {
 }
 
 class _StatePageState extends State<StatePage> {
-
   List<StateData> states;
 
   @override
   void initState() {
     super.initState();
-    getStateData().then((value){
+    getStateData().then((value) {
       setState(() {
         states = value;
       });
@@ -31,9 +29,7 @@ class _StatePageState extends State<StatePage> {
         appBar: AppBar(
           title: Text(
             'State Cases',
-            style: TextStyle(
-              color: getColor(context)
-            ),
+            style: TextStyle(color: getColor(context)),
           ),
           iconTheme: getIconTheme(context),
           centerTitle: true,
@@ -41,30 +37,28 @@ class _StatePageState extends State<StatePage> {
           backgroundColor: Colors.transparent,
           actions: <Widget>[
             IconButton(
-              color: getColor(context),
-              onPressed: () {
-                showSearch(context: context,
-                delegate: DataSearch(states: states));
-              },
-              icon: Icon(Icons.search),
-              splashColor: Colors.transparent
-            ),
+                color: getColor(context),
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: DataSearch(states: states));
+                },
+                icon: Icon(Icons.search),
+                splashColor: Colors.transparent),
           ],
         ),
         body: FutureBuilder(
-          future: Future.delayed(Duration(seconds: 2)),
-          builder: (context, snapshot) {
-            if (states != null)
-              return StateBuilder(states: states);
-            else {
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Theme.of(context).backgroundColor,
-                ),
-              );
-            }
-          }
-        ),
+            future: Future.delayed(Duration(seconds: 2)),
+            builder: (context, snapshot) {
+              if (states != null)
+                return StateBuilder(states: states);
+              else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Theme.of(context).backgroundColor,
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
@@ -81,30 +75,11 @@ class StateBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count = (states.length == 0 ? 0 : states.length -1);
-    return DraggableScrollbar.semicircle(
-      heightScrollThumb: 42.0,
-      backgroundColor: getTheme(context) == 'Dark' ? Colors.black : Colors.white,
-      labelTextBuilder: (offset) {
-        final int currentItem = controller.hasClients
-            ? (controller.offset /
-                    controller.position.maxScrollExtent *
-                    count)
-                .floor()
-            : 0;
-        return Text(
-          "$currentItem",
-          style: TextStyle(
-            color: getColor(context),
-          ),
-        );
-      },
-      labelConstraints: BoxConstraints.tightFor(width: 40.0, height: 30.0),
-      controller: controller,
-      child: ListView.builder(
+    int count = (states.length == 0 ? 0 : states.length - 1);
+    return ListView.builder(
         itemCount: count,
         controller: controller,
-        itemBuilder:(_,index) {
+        itemBuilder: (_, index) {
           return Card(
             margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Container(
@@ -114,11 +89,9 @@ class StateBuilder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    states[index+1].state,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0
-                    ),
+                    states[index + 1].state,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
                   SizedBox(
                     height: 40.0,
@@ -126,31 +99,39 @@ class StateBuilder extends StatelessWidget {
                       thickness: 2.0,
                     ),
                   ),
-                  StateStat(text: 'Confirmed', total: states[index+1].confirmed, today: states[index+1].deltaconfirmed),
+                  StateStat(
+                      text: 'Confirmed',
+                      total: states[index + 1].confirmed,
+                      today: states[index + 1].deltaconfirmed),
                   SizedBox(height: 30.0),
-                  StateStat(text: 'Deaths', total: states[index+1].deaths, today: states[index+1].deltadeaths),
+                  StateStat(
+                      text: 'Deaths',
+                      total: states[index + 1].deaths,
+                      today: states[index + 1].deltadeaths),
                   SizedBox(height: 30.0),
-                  StateStat(text: 'Recovered', total: states[index+1].recovered, today: states[index+1].deltarecovered),
+                  StateStat(
+                      text: 'Recovered',
+                      total: states[index + 1].recovered,
+                      today: states[index + 1].deltarecovered),
                   SizedBox(height: 40.0),
                   Text(
-                    'Active Cases: ' + states[index+1].active,
+                    'Active Cases: ' + states[index + 1].active,
                     style: stateCardCases,
                   )
                 ],
               ),
             ),
           );
-        }
-      ),
-    );
+        });
   }
 }
 
 class StateStat extends StatelessWidget {
   const StateStat({
     Key key,
-    this.today, this.total,
-      this.text,
+    this.today,
+    this.total,
+    this.text,
   }) : super(key: key);
 
   final String text, total, today;
@@ -159,10 +140,7 @@ class StateStat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Text(
-          text,
-          style: stateCardCases
-        ),
+        Text(text, style: stateCardCases),
         Spacer(),
         Column(
           children: <Widget>[

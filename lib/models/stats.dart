@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 String api = 'https://disease.sh/v3/covid-19/historical/';
 String prefix = '?lastdays=360';
-String globalapi = 'https://disease.sh/v3/covid-19/historical/all?lastdays=360';
+String globalapi = 'https://disease.sh/v3/covid-19/historical/all?lastdays=600';
 
 class Stats {
   Map cases;
@@ -21,13 +21,13 @@ class Stats {
 }
 
 Future<Stats> getStats(String country) async {
-  final response = await http.get(api + country + prefix);
+  final response = await http.get(Uri.parse(api + country + prefix));
   final responseJson = json.decode(response.body);
   return Stats.fromJson(responseJson['timeline']);
 }
 
 Future<Stats> getGlobalStats() async {
-  final response = await http.get(globalapi);
+  final response = await http.get(Uri.parse(globalapi));
   final responseJson = json.decode(response.body);
   return Stats.fromJson(responseJson);
 }

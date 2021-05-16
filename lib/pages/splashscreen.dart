@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:covid19_tracker/models/indiastatewise.dart';
 import 'package:covid19_tracker/widgets/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:covid19_tracker/pages/homepage.dart';
+import 'package:covid19_tracker/pages/homepage/homepage.dart';
 import 'package:covid19_tracker/models/info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,10 +13,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  List<Info> info = new List<Info>();
+  List<Info> info = [];
   Latest latest = new Latest();
   Latest savedlatest = new Latest();
-  List<IndiaState> indiaState = new List<IndiaState>();
+  List<IndiaState> indiaState = [];
 
   read(String key) async {
     final prefs = await SharedPreferences.getInstance();
@@ -65,11 +65,13 @@ class _SplashScreenState extends State<SplashScreen> {
       getDailyData(),
     ]).then((value) {
       Route route = MaterialPageRoute(
-          builder: (context) => HomePage(
-              title: 'Covid-19 Tracker',
-              latest: latest,
-              info: info,
-              savedlatest: savedlatest));
+        builder: (context) => HomePage(
+          //title: 'Covid-19 Tracker',
+          latest: latest,
+          info: info,
+          //savedlatest: savedlatest,
+        ),
+      );
       Navigator.pushReplacement(context, route);
     });
   }

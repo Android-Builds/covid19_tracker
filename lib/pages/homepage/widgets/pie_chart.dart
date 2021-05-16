@@ -1,31 +1,27 @@
+import 'package:covid19_tracker/models/graph_classes.dart';
 import 'package:covid19_tracker/models/info.dart';
-import 'package:covid19_tracker/widgets/themes.dart';
+import 'package:covid19_tracker/utils/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class CountryPieChart extends StatelessWidget {
-  CountryPieChart({this.info});
+class CasePieChart extends StatelessWidget {
+  CasePieChart({this.info});
 
-  final Info info;
-  // final red = charts.MaterialPalette.red.makeShades(3);
+  final Latest info;
 
-  _getSeriesData() {
+  _getData() {
     var active = double.parse(
         ((double.parse('${info.active}') / double.parse('${info.cases}')) *
                 100.roundToDouble())
             .toStringAsFixed(2));
-    // double.parse((double.parse(info.active)/double.parse(info.cases)).toStringAsFixed(2))*100;
-    // double.parse((info.active/info.cases).toStringAsFixed(3))*100;
     var deaths = double.parse(
         ((double.parse('${info.deaths}') / double.parse('${info.cases}')) *
                 100.roundToDouble())
             .toStringAsFixed(2));
-    // double.parse((double.parse(info.deaths)/double.parse(info.cases)).toStringAsFixed(2))*100;
     var recovered = double.parse(
         ((double.parse('${info.recovered}') / double.parse('${info.cases}')) *
                 100.roundToDouble())
             .toStringAsFixed(2));
-    // double.parse((double.parse(info.recovered)/double.parse(info.cases)).toStringAsFixed(2))*100;
 
     var data = [
       GlobalData('Active', active),
@@ -59,35 +55,37 @@ class CountryPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
-      height: 300,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.0,
+        vertical: 30.0,
+      ),
       child: Column(
         children: <Widget>[
           Text(
-            "Global Data",
+            "Case Distribution",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: size.width * 0.07,
+              fontSize: 20.0,
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
           Expanded(
             child: charts.PieChart(
-              _getSeriesData(),
-              animate: true,
+              _getData(),
+              animate: false,
               defaultRenderer: charts.ArcRendererConfig(
                 arcWidth: 20,
                 arcRendererDecorators: [
                   charts.ArcLabelDecorator(
                     leaderLineStyleSpec: charts.ArcLabelLeaderLineStyleSpec(
-                        color: getTheme(context) == 'Dark'
-                            ? charts.Color.white
-                            : charts.Color.black,
-                        thickness: 1.0,
-                        length: 20.0),
+                      color: getTheme(context) == 'Dark'
+                          ? charts.Color.white
+                          : charts.Color.black,
+                      thickness: 1.0,
+                      length: 20.0,
+                    ),
                     leaderLineColor: getTheme(context) == 'Dark'
                         ? charts.Color.white
                         : charts.Color.black,
@@ -95,23 +93,21 @@ class CountryPieChart extends StatelessWidget {
                       color: getTheme(context) == 'Dark'
                           ? charts.Color.white
                           : charts.Color.black,
-                      fontSize: 12,
+                      fontSize: 13,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          Text('Total Confirmed Cases: ${info.cases}'),
+          SizedBox(height: 20),
+          Text(
+            "Total Cases: ${info.cases}",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
-}
-
-class GlobalData {
-  final String parameters;
-  final double percentage;
-
-  GlobalData(this.parameters, this.percentage);
 }

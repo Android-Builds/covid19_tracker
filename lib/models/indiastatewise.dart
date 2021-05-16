@@ -26,10 +26,10 @@ class IndiaState {
   }
 }
 
-List<IndiaState> indiastates = new List<IndiaState>();
+List<IndiaState> indiastates = [];
 
 Future<List<IndiaState>> getIndia() async {
-  final response = await http.get(api);
+  final response = await http.get(Uri.parse(api));
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);
@@ -86,9 +86,9 @@ class DailyData {
     var state = json.keys.toList();
     state.remove('date');
     state.remove('status');
-    List<StateData> conf = new List<StateData>();
-    List<StateData> rec = new List<StateData>();
-    List<StateData> dec = new List<StateData>();
+    List<StateData> conf = [];
+    List<StateData> rec = [];
+    List<StateData> dec = [];
     for (int i = 0; i < state.length; i++) {
       if (json != null && json2 != null && json3 != null) {
         conf.add(StateData.fromJson(json, state[i]));
@@ -105,10 +105,10 @@ class DailyData {
   }
 }
 
-List<DailyData> dailyData = new List<DailyData>();
+List<DailyData> dailyData = [];
 
 Future<List<DailyData>> getDailyData() async {
-  final response = await http.get(dailyapi);
+  final response = await http.get(Uri.parse(dailyapi));
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);

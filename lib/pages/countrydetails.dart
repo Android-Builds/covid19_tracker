@@ -20,9 +20,7 @@ class _CountryDetailsState extends State<CountryDetails> {
         appBar: AppBar(
           title: Text(
             widget.info.country,
-            style: TextStyle(
-              color: getColor(context)
-            ),
+            style: TextStyle(color: getColor(context)),
           ),
           iconTheme: getIconTheme(context),
           centerTitle: true,
@@ -32,11 +30,23 @@ class _CountryDetailsState extends State<CountryDetails> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              CountryCaseCards(text: 'Cases', case1: widget.info.cases, 
-                case2: widget.info.todayCases, case3: widget.info.casesPerOneMillion),
-              CountryCaseCards(text: 'Deaths', case1: widget.info.deaths, 
-                case2: widget.info.todayDeaths, case3: widget.info.deathsPerOneMillion),
-              CountryCaseCards(text: 'Tests', case1: widget.info.tests, case3: widget.info.testsPerOneMillion),
+              CountryCaseCards(
+                text: 'Cases',
+                case1: '${widget.info.cases}',
+                case2: '${widget.info.todayCases}',
+                case3: widget.info.casesPerOneMillion,
+              ),
+              CountryCaseCards(
+                text: 'Deaths',
+                case1: '${widget.info.deaths}',
+                case2: '${widget.info.todayDeaths}',
+                case3: widget.info.deathsPerOneMillion,
+              ),
+              CountryCaseCards(
+                text: 'Tests',
+                case1: widget.info.tests,
+                case3: widget.info.testsPerOneMillion,
+              ),
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 elevation: 10.0,
@@ -56,9 +66,9 @@ class _CountryDetailsState extends State<CountryDetails> {
                               style: caseStyles,
                             ),
                             SizedBox(height: 20.0),
-                            Text(widget.info.active)
+                            Text('${widget.info.active}')
                           ],
-                        ),  
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -67,7 +77,7 @@ class _CountryDetailsState extends State<CountryDetails> {
                               style: caseStyles,
                             ),
                             SizedBox(height: 20.0),
-                            Text(widget.info.critical)
+                            Text('${widget.info.critical}')
                           ],
                         ),
                         Column(
@@ -78,7 +88,7 @@ class _CountryDetailsState extends State<CountryDetails> {
                               style: caseStyles,
                             ),
                             SizedBox(height: 20.0),
-                            Text(widget.info.recovered)
+                            Text('${widget.info.recovered}')
                           ],
                         )
                       ],
@@ -89,7 +99,9 @@ class _CountryDetailsState extends State<CountryDetails> {
               SizedBox(height: 10.0),
               CountryPieChart(info: widget.info),
               SizedBox(height: 20.0),
-              CountryStats(country: widget.info.country,),
+              CountryStats(
+                country: widget.info.country,
+              ),
             ],
           ),
         ),
